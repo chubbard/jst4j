@@ -34,9 +34,14 @@
     <option name="USER" value="" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" name="Default" comment="" />
+    <list default="true" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/serversidejs.iws" afterPath="$PROJECT_DIR$/serversidejs.iws" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/serversidejs.ipr" afterPath="$PROJECT_DIR$/serversidejs.ipr" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/jst.html" afterPath="$PROJECT_DIR$/docs/jst.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/jst4j.iml" afterPath="$PROJECT_DIR$/jst4j.iml" />
+    </list>
   </component>
-  <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
+  <component name="ChangesViewManager" flattened_view="false" show_ignored="false" />
   <component name="Commander">
     <leftPanel />
     <rightPanel />
@@ -127,7 +132,38 @@
             <state />
           </provider>
           <provider selected="true" editor-type-id="text-editor">
-            <state line="10" column="28" selection-start="352" selection-end="352" vertical-scroll-proportion="0.29268292">
+            <state line="39" column="0" selection-start="2365" selection-end="2365" vertical-scroll-proportion="0.40731707">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Emailer.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/jst/mail/Emailer.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="32" column="19" selection-start="797" selection-end="797" vertical-scroll-proportion="-0.70974576">
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Shell.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/jst/shell/Shell.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="21" column="38" selection-start="525" selection-end="525" vertical-scroll-proportion="0.13559322">
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TemplateContext.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/jst/TemplateContext.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="9" column="28" selection-start="178" selection-end="178" vertical-scroll-proportion="0.12711865">
               <folding />
             </state>
           </provider>
@@ -136,16 +172,7 @@
       <file leaf-file-name="JavascriptTemplateBean.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/jst/spring/JavascriptTemplateBean.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="75" column="8" selection-start="2030" selection-end="2030" vertical-scroll-proportion="0.9173729">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ServerSideTemplate.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/jst/ServerSideTemplate.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="138" column="0" selection-start="5666" selection-end="5666" vertical-scroll-proportion="0.025423728">
+            <state line="78" column="0" selection-start="2150" selection-end="2150" vertical-scroll-proportion="1.2094456">
               <folding />
             </state>
           </provider>
@@ -154,17 +181,40 @@
       <file leaf-file-name="JstViewResolver.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/jst/spring/JstViewResolver.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="5" column="26" selection-start="180" selection-end="180" vertical-scroll-proportion="0.09856263">
+            <state line="5" column="13" selection-start="167" selection-end="167" vertical-scroll-proportion="0.09856263">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="JstView.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/jst/spring/JstView.java">
+      <file leaf-file-name="build.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/build.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="19" column="0" selection-start="617" selection-end="617" vertical-scroll-proportion="0.3559322">
+            <state line="44" column="54" selection-start="1506" selection-end="1506" vertical-scroll-proportion="0.96178347">
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="changelog.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/docs/changelog.html">
+          <provider editor-type-id="HtmlPreview">
+            <state />
+          </provider>
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="8" column="0" selection-start="306" selection-end="306" vertical-scroll-proportion="0.22588235">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="JavascriptFilter.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/jst/http/JavascriptFilter.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="14" column="13" selection-start="319" selection-end="319" vertical-scroll-proportion="0.3516949">
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -172,17 +222,10 @@
       <file leaf-file-name="ScriptExecution.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/jst/ScriptExecution.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="75" column="52" selection-start="2551" selection-end="2551" vertical-scroll-proportion="0.052966103">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="TemplateDispatcher.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/jst/http/TemplateDispatcher.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="56" column="21" selection-start="1895" selection-end="1895" vertical-scroll-proportion="1.2566735">
-              <folding />
+            <state line="13" column="13" selection-start="337" selection-end="337" vertical-scroll-proportion="0.32838982">
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -249,7 +292,43 @@
           <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
         </PATH_ELEMENT>
         <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:/Users/charlie/projects/dev/jst4j" />
+          <option name="myItemId" value="PsiDirectory:/Users/charlie/projects/jst4j/trunk" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+      </PATH>
+      <PATH>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="serversidejs" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="jst4j" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:/Users/charlie/projects/jst4j/trunk" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:/Users/charlie/projects/jst4j/trunk/lib" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+      </PATH>
+      <PATH>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="serversidejs" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="jst4j" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:/Users/charlie/projects/jst4j/trunk" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:/Users/charlie/projects/jst4j/trunk/docs" />
           <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
         </PATH_ELEMENT>
       </PATH>
@@ -611,17 +690,17 @@
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="3" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32969433" order="2" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="7" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.23105225" order="0" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.23105225" order="0" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3273196" order="1" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" order="1" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.29442284" order="14" />
+      <window_info id="Messages" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.29442284" order="14" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" order="6" />
       <window_info id="Module Dependencies" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="7" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="10" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="3" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.16924208" order="4" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.16850625" order="4" />
       <window_info id="Maven projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="5" />
-      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="11" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3294423" order="11" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.34407216" order="2" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" order="1" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3995633" order="0" />
@@ -653,7 +732,7 @@
     <option name="PERFORM_EDIT_IN_BACKGROUND" value="true" />
     <option name="PERFORM_ADD_REMOVE_IN_BACKGROUND" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="Initial commit of jst4j" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added more documentation for Email, Spring MVC, and J2se integration.  Also updated the JavascriptTemplateBean to not depend on ServletContextAware interface." />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="REFORMAT_BEFORE_FILE_COMMIT" value="false" />
@@ -665,6 +744,9 @@
     <option name="SHOW_FILE_HISTORY_AS_TREE" value="false" />
     <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.6" />
     <MESSAGE value="Initial commit of jst4j" />
+    <MESSAGE value="Added code to create a release package, and added a change log to the documentation." />
+    <MESSAGE value="Added JST Emailer class to send JST template emails to users." />
+    <MESSAGE value="Added more documentation for Email, Spring MVC, and J2se integration.  Also updated the JavascriptTemplateBean to not depend on ServletContextAware interface." />
   </component>
   <component name="VssConfiguration">
     <option name="CLIENT_PATH" value="" />
@@ -723,72 +805,102 @@
     <option name="myLastEditedConfigurable" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar://$PROJECT_DIR$/lib/spring-webmvc.jar!/org/springframework/web/servlet/view/AbstractTemplateViewResolver.class">
+    <entry file="file://$PROJECT_DIR$/src/jst/http/ServletTemplateLoader.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="41" selection-start="174" selection-end="202" vertical-scroll-proportion="0.10169491">
+        <state line="2" column="0" selection-start="19" selection-end="19" vertical-scroll-proportion="0.049281314">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/jst/http/JavascriptFilter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="14" column="13" selection-start="319" selection-end="319" vertical-scroll-proportion="0.3516949">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/resources/test/include.jst">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="jar://$PROJECT_DIR$/lib/spring-webmvc.jar!/org/springframework/web/servlet/view/UrlBasedViewResolver.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="13" selection-start="174" selection-end="174" vertical-scroll-proportion="0.10169491">
-          <folding />
-        </state>
+    <entry file="file://$PROJECT_DIR$/web/WEB-INF/web.xml">
+      <provider editor-type-id="com.intellij.javaee.module.view.web.viewlets.WebModuleAssemblyDescriptorProvider">
+        <state />
       </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/lib/spring-webmvc.jar!/org/springframework/web/servlet/view/AbstractUrlBasedView.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="22" selection-start="183" selection-end="183" vertical-scroll-proportion="0.06798867">
-          <folding />
-        </state>
+      <provider editor-type-id="com.intellij.javaee.module.view.web.viewlets.WebModuleGeneralEditorProvider">
+        <state />
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/jst/spring/JavascriptTemplateBean.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="75" column="8" selection-start="2030" selection-end="2030" vertical-scroll-proportion="0.9173729">
-          <folding />
-        </state>
+      <provider editor-type-id="com.intellij.javaee.module.view.web.viewlets.WebModuleAssemblyDescriptorReferencesProvider">
+        <state />
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/jst/ServerSideTemplate.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="138" column="0" selection-start="5666" selection-end="5666" vertical-scroll-proportion="0.025423728">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/jst/spring/JstViewResolver.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="26" selection-start="180" selection-end="180" vertical-scroll-proportion="0.09856263">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/jst/ScriptExecution.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="75" column="52" selection-start="2551" selection-end="2551" vertical-scroll-proportion="0.052966103">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/jst/http/TemplateDispatcher.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="56" column="21" selection-start="1895" selection-end="1895" vertical-scroll-proportion="1.2566735">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/jst/spring/JstView.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="0" selection-start="617" selection-end="617" vertical-scroll-proportion="0.3559322">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/build.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="0" selection-start="266" selection-end="266" vertical-scroll-proportion="0.15286624">
+        <state line="44" column="54" selection-start="1506" selection-end="1506" vertical-scroll-proportion="0.96178347">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs/changelog.html">
+      <provider editor-type-id="HtmlPreview">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="8" column="0" selection-start="306" selection-end="306" vertical-scroll-proportion="0.22588235">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/jst/spring/JstViewResolver.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="5" column="13" selection-start="167" selection-end="167" vertical-scroll-proportion="0.09856263">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/jst/spring/JavascriptTemplateBean.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="78" column="0" selection-start="2150" selection-end="2150" vertical-scroll-proportion="1.2094456">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/jst/TemplateContext.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="9" column="28" selection-start="178" selection-end="178" vertical-scroll-proportion="0.12711865">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/jst/test/EmbedTemplateTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="20" column="0" selection-start="157" selection-end="604" vertical-scroll-proportion="0.39130434">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/jst/TemplateLoader.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="5" column="17" selection-start="88" selection-end="88" vertical-scroll-proportion="0.104347825">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/jst/scripts/core/jst.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -800,24 +912,21 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/jst/scripts/core/shell.jst">
+    <entry file="file://$PROJECT_DIR$/src/jst/mail/Emailer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
+        <state line="32" column="19" selection-start="797" selection-end="797" vertical-scroll-proportion="-0.70974576">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/jst/scripts/core/jst.js">
+    <entry file="file://$PROJECT_DIR$/src/jst/shell/Shell.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-1.1437372">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/jst/scripts/core/html.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
+        <state line="21" column="38" selection-start="525" selection-end="525" vertical-scroll-proportion="0.13559322">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -826,7 +935,7 @@
         <state />
       </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="28" selection-start="352" selection-end="352" vertical-scroll-proportion="0.29268292">
+        <state line="39" column="0" selection-start="2365" selection-end="2365" vertical-scroll-proportion="0.40731707">
           <folding />
         </state>
       </provider>
