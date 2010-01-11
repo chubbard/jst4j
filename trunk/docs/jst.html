@@ -434,9 +434,175 @@ public class TestJSTServlet extends HttpServlet {
         given to our mixin.  The user doesn't really use this to access the mixin methods.
     </p>
 
+    <h3>Spring MVC Integration</h3>
+
+    <p>
+        It's great that we can use JST templates from plain old servlets making it available to
+        a broad audience, but most modern web development is done outside of the plain old servlet
+        framework.  Particularly, the rise of Spring and technologies based on Spring is now the
+        new defacto standard of development.  Good news is that JST is integrated into Spring and
+        Spring MVC out of the box.
+    </p>
+
+    <p>
+        Jst4J includes ready made ViewResolver for Spring MVC called JstViewResolver.  Let's
+        configure JstViewResolver in our Spring files.  Here is a simple example:
+    </p>
+
+    <blockquote class="java">
+&lt;bean class=&quot;jst.spring.JstViewResolver&quot;&gt;
+    &lt;property name=&quot;templates&quot; ref=&quot;tempaltes&quot;/&gt;
+&lt;/bean&gt;
+
+&lt;bean id=&quot;templates&quot; class=&quot;jst.spring.JavascriptTemplateBean&quot;&gt;
+    &lt;property name="resourcePaths"&gt;
+        &lt;list&gt;
+            &lt;value&gt;/WEB-INF/templates&lt;/value&gt;
+            &lt;value&gt;/javascript&lt;/value&gt;
+        &lt;/list&gt;
+    &lt;/property&gt;
+&lt;/bean&gt;
+    </blockquote>
+
+    <p>
+        First thing is to configure the JstViewResolver instance which is the first bean
+        in the configuration.  It requires a JavascriptTemplateBean instance so it knows
+        where your templates will be stored in your application.  In this example, I've
+        configured two locations.  One under /WEB-INF/templates and another under the
+        /javascript directory.  The /javascript directory is where I keep client side
+        scripts so it's publicly visible.  The other is under WEB-INF so it's private.
+    </p>
+    <p>
+        What this allows me to do is keep my jst templates under WEB-INF, but share some
+        plain old javascript files between the client and the server.  These might be
+        simple utility methods for manipulating strings, numbers, etc.  Keep in mind
+        your server side javascript environment is NOT the same as your browser
+        environment.  Things like DOM model for the document, certain globals like window,
+        are not valid in JST templates.  But, you can still share code if it shares
+        commonalities between your client and server.
+    </p>
+
+    <p>
+        Why the separation between JstViewResolver and JavascriptTemplateBean?  By
+        separating the two objects I can share templates between the web side, and
+        non-web side within one application while sharing my template configuration
+        between them.  For example, say I wanted to use JST templates for my web pages,
+        AND emails I might send out.  You can do that within one application.
+    </p>
+
     <h3>Using JST outside of the Web</h3>
 
-    <p>Todo</p>
+    <p>
+        As mentioned before Jst4J is not married to the web like JSP.  It's flexible
+        and portable among many different types of applications.  Let's look at how
+        we can use Jst4J templates in a plain old java program.
+    </p>
 
+    <blockquote class="java">
+public class EmbedTemplateTest {
+
+    public static void main(String[] args) throws IOException {
+        TemplateContext context = new TemplateContext();
+        context.addLoader( new FileTemplateLoader( new File("./test") ) );
+        ScriptExecution execution = context.load("/embedded-test.jst");
+        Object output = execution.addVariable("name", "Charlie").addVariable("age", 31).invoke();
+
+        System.out.println( output );
+    }
+}
+    </blockquote>
+
+    <p>
+        In this quick example we create a TemplateContext object.  The TemplateContext
+        object is a long living object.  Typically, the life of your program is the life
+        of this object.  It is responsible for loading templates and caching them.  It
+        supports compiling known scripts for performance and keeping those scripts in
+        memory so that you don't have to reload those objects over.  When it's not in
+        production, which is the default mode, it will reload scripts when it sees their
+        date changes.  When it's in production it skips this check to boost performance.
+    </p>
+
+    <p>
+        The next thing it does is register a TemplateLoader with the TemplateContext.
+        TemplateLoaders are responsibile for the details of finding scripts and loading
+        them for the TemplateContext.  You can have as many TemplateLoaders as you wish
+        so you can support pulling scripts from many locations.
+    </p>
+
+    <p>
+        The next line loads a template by calling context.load() method.  The return type
+        is a ScriptExecution.  ScriptExecution instances are specific to this execution
+        of this script.  ScriptExecution's job is to allow you add object's into the
+        script's environment before you invoke it.  This allows you to register Java
+        instances you'd like available to the script, or add other Javascript code by
+        default into the script.  <b>Note</b>: Your scripts scan request some other code be included
+        using the include() method.  This is the preferred way to include dependant Javascript
+        files needed by your script because it's much more flexible.  Doing it in Java code
+        creates dependancy between your Java code and your specific script you are invoking.
+        It's better to allow the script to declare these dependencies.  However, if you
+        creating framework like environment for your scripts you can do so in Java code.
+    </p>
+
+    <p>
+        The next line does several things before calling the invoke() method.  It adds
+        two variables from Java and registers them with variable names <i>name</i> and
+        <i>age</i>.  This allows our JST file to simply refer to these variables from the
+        global scope.  Finally, it calls invoke() to render the template, and prints the
+        output.
+    </p>
+
+    <h3>Jst4J and Email</h3>
+
+    <p>
+        Email is another area where it would be nice to use something like JST to subtituted
+        in parameters much like we do for our web pages.  Good news Jst4J comes with a
+        package out of the box for doing integration with Javamail.  Let's look at how
+        we can configure Spring context with our Emailer class:
+    </p>
+
+    <blockquote class="java">
+&lt;bean id="emailer" class="com.piifinder.server.email.Emailer"&gt;
+    &lt;constructor-arg index="0" ref="jst"/&gt;
+    &lt;constructor-arg index="1"&gt;
+        &lt;props&gt;
+        mail.host=smtp.yourdomain.com
+        mail.user=mailie
+        mail.port=25
+        mail.password=this is not safe
+        &lt;props&gt;
+    &lt;/constructor-arg&gt;
+    &lt;constructor-arg index="2" value="no-reply@yourdomain.com"/&gt;
+&lt;/bean&gt;
+
+&lt;bean id=&quot;jst&quot; class=&quot;jst.spring.JavascriptTemplateBean&quot;&gt;
+    &lt;property name="resourcePaths"&gt;
+        &lt;list&gt;
+            &lt;value&gt;/WEB-INF/templates&lt;/value&gt;
+            &lt;value&gt;/javascript&lt;/value&gt;
+        &lt;/list&gt;
+    &lt;/property&gt;
+&lt;/bean&gt;
+    </blockquote>
+
+    <p>
+        To use the emailer it's as simple as the following:
+    </p>
+
+    <blockquote class="java">
+        Emailer emailer = ...
+
+        emailer.email( "You should use Jst4J", "jst4j_is_awesome.jst", "jst4j_is_awesome_html.jst" )
+            .to( "somebody@somewhere.com")
+            .bcc( "secret@somewhere.com")
+            .cc("joe@somwhere.com")
+            .attach( new File( "jst4j-1.0.zip" ) )
+            .bind( "url", "http://jst4j.googlecode.com" ) // bind a variable into the template
+            .send();
+    </blockquote>
+
+    <p>
+        There are several ways you can call send(), but this is the simplest way to send the
+        email.  This requires Javamail package which is not apart of the jst4j pacakge.
+    </p>
 </body>
 </html>

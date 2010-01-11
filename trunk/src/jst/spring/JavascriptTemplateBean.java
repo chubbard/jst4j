@@ -11,17 +11,12 @@ import java.util.HashMap;
 import java.io.IOException;
 import java.io.File;
 
-import org.springframework.web.context.ServletContextAware;
-
-import javax.servlet.ServletContext;
-
-public class JavascriptTemplateBean implements ServletContextAware {
+public class JavascriptTemplateBean {
     private TemplateContext context;
 
     private Map<String,Object> variables;
     private Map<String,Object> mixins;
-    private List<String> resourcePaths = new ArrayList<String>();
-    private ServletContext servletContext;
+    private List<File> resourcePaths = new ArrayList<File>();
 
     public JavascriptTemplateBean() {
         variables = new HashMap<String,Object>();
@@ -44,11 +39,11 @@ public class JavascriptTemplateBean implements ServletContextAware {
         this.mixins = mixins;
     }
 
-    public List<String> getResourcePaths() {
+    public List<File> getResourcePaths() {
         return resourcePaths;
     }
 
-    public void setResourcePaths(List<String> resourcePaths) {
+    public void setResourcePaths(List<File> resourcePaths) {
         this.resourcePaths = resourcePaths;
     }
 
@@ -79,17 +74,10 @@ public class JavascriptTemplateBean implements ServletContextAware {
     private void initializeContext() throws IOException {
         if( context == null ) {
             context = new TemplateContext();
-            for( String resourcePath : resourcePaths ) {
-                context.addLoader( new FileTemplateLoader(getResource(resourcePath)) );
+            for( File resourcePath : resourcePaths ) {
+                context.addLoader( new FileTemplateLoader( resourcePath ) );
             }
         }
     }
 
-    private File getResource(String resourcePath) {
-        return new File( servletContext != null ? servletContext.getRealPath( resourcePath ) : resourcePath );
-    }
-
-    public void setServletContext(ServletContext servletContext) {
-        this.servletContext = servletContext;
-    }
 }
