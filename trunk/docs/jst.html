@@ -9,8 +9,9 @@
 <body>
     <p>
         JavasScript Templates (JST) is a templating technology for Java applications
-        based on Javascript.  It's very similiar to Velocity or Freemarker, but it provides
-        more powerful re-use, reusable layouts, utility methods, no new syntax rules, security,
+        based on Javascript.  It's very similiar to Velocity or Freemarker, but it is much
+        more powerful and feature rich than those libraries.  Jst4j gives you powerful re-use
+        of scripts, reusable layouts, utility methods, no new syntax rules, security,
         transparent escaping for HTML/XML, and many more advantages over other template
         solutions for Java.
     </p>
@@ -23,15 +24,15 @@
         philosophy, and so we generally choose technology based on their philosophies.
         I wrote this library mainly after constant frustration with JSP and worse JSP tags.
         I've never bought the argument for banishing Java code from JSP.  It was never an
-        issue of the use of Java, but an issue of moderation.  JSP was in need of
-        help, but it was really about being able to decompose portion of a page into
-        reusable pieces that you could pass parameters between.  Just like a method or function
-        in your programming language.  JSP was too isolated from the controller and model, and
-        this produced the environment that lead to people putting too much Java code in their
-        view because they didn't have any other choice.
+        issue of the use of Java, but an issue of abstraction and resynthesis - in a word reuse.
+        JSP was in need of help, but it was really about being able to decompose portion of 
+        a page into reusable pieces that you could pass parameters between.  Just like a
+        method or function in your programming language.  JSP was too isolated from the
+        controller and model, and this produced the environment that lead to people putting
+        too much Java code in their view because they didn't have any other choice.
     </p>
     <p>
-        Almost every other web technology utilizes a fully turing complete language (PHP,
+        Almost every other web technology utilizes a turing complete language (PHP,
         eRuby, ASP) as their template language, and they don't seem to have any the problems
         JSP Tags were supposed to solve.  But, even if JSP tags were on the right track it
         created a huge canyon between view code and Java code.  Making it very difficult
@@ -44,6 +45,13 @@
         Furthermore, JSP is targeted at delivery over HTTP only.  Say you want to generate
         XML, an email, etc.  JSP won't work unless you serving that output over HTTP.  There
         are many other opportunities where templating is needed.
+    </p>
+
+    <p>
+        I hope you will begin to see how antiquated and overburndened JSP has become.  And,
+        how template languages like Velocity and Freemarker were on the right track, but
+        stopped too short of providing the right tools you need as a developer.  Jst4j
+        gives you access to the tools and techniques modern applications demand.
     </p>
 
 
@@ -64,17 +72,17 @@
     </p>
 
     <blockquote class="java">
-        &lt;filter&gt;
-            &lt;filter-name&gt;jst&lt;/filter-name&gt;
-            &lt;filter-class&gt;jst.http.JavascriptFilter&lt;/filter-class&gt;
-        &lt;/filter&gt;
+&lt;filter&gt;
+    &lt;filter-name&gt;jst&lt;/filter-name&gt;
+    &lt;filter-class&gt;jst.http.JavascriptFilter&lt;/filter-class&gt;
+&lt;/filter&gt;
 
-        &lt;filter-mapping&gt;
-            &lt;filter-name&gt;jst&lt;/filter-name&gt;
-            &lt;url-pattern&gt;*.jst&lt;/url-pattern&gt;
-            &lt;dispatcher&gt;FORWARD&lt;/dispatcher&gt;
-            &lt;dispatcher&gt;INCLUDE&lt;/dispatcher&gt;
-        &lt;/filter-mapping&gt;
+&lt;filter-mapping&gt;
+    &lt;filter-name&gt;jst&lt;/filter-name&gt;
+    &lt;url-pattern&gt;*.jst&lt;/url-pattern&gt;
+    &lt;dispatcher&gt;FORWARD&lt;/dispatcher&gt;
+    &lt;dispatcher&gt;INCLUDE&lt;/dispatcher&gt;
+&lt;/filter-mapping&gt;
     </blockquote>
 
     <p>
@@ -92,7 +100,7 @@
     </p>
 
     <blockquote class="java">
-        Hello JST world!  It's me &lt;%= request.getParameter("name") %&gt;.
+Hello JST world!  It's me &lt;%= request.getParameter("name") %&gt;.
     </blockquote>
 
     <p>
@@ -104,7 +112,7 @@
     </p>
 
     <blockquote class="java">
-        Hello JST world!  It's me chuck.
+Hello JST world!  It's me chuck.
     </blockquote>
 
     <p>
@@ -134,16 +142,16 @@
     </p>
 
     <blockquote class="java">
-        &lt;% var names = [ "chuck", "chaz", "chuckles", "chucky", "bill", "jim" ]; %&gt;
+&lt;% var names = [ "chuck", "chaz", "chuckles", "chucky", "bill", "jim" ]; %&gt;
 
-        Names that start with "CH":
+Names that start with "CH":
 
-        &lt;% var results = names.filter( function( item ) { return item.indexOf("ch") == 0; } -%&gt;
-        &lt;ul&gt;
-        &lt;% results.forEach( function( item ) { -%&gt;
-            &lt;li&gt;&lt;%= item %&gt;&lt;/li&gt;
-        &lt;% } -%&gt;
-        &lt;/ul&gt;
+&lt;% var results = names.filter( function( item ) { return item.indexOf("ch") == 0; } -%&gt;
+&lt;ul&gt;
+&lt;% results.forEach( function( item ) { -%&gt;
+    &lt;li&gt;&lt;%= item %&gt;&lt;/li&gt;
+&lt;% } -%&gt;
+&lt;/ul&gt;
     </blockquote>
 
     <p>
@@ -589,15 +597,15 @@ public class EmbedTemplateTest {
     </p>
 
     <blockquote class="java">
-        Emailer emailer = ...
+Emailer emailer = ...
 
-        emailer.email( "You should use Jst4J", "jst4j_is_awesome.jst", "jst4j_is_awesome_html.jst" )
-            .to( "somebody@somewhere.com")
-            .bcc( "secret@somewhere.com")
-            .cc("joe@somwhere.com")
-            .attach( new File( "jst4j-1.0.zip" ) )
-            .bind( "url", "http://jst4j.googlecode.com" ) // bind a variable into the template
-            .send();
+emailer.email( "You should use Jst4J", "jst4j_is_awesome.jst", "jst4j_is_awesome_html.jst" )
+    .to( "somebody@somewhere.com")
+    .bcc( "secret@somewhere.com")
+    .cc("joe@somwhere.com")
+    .attach( new File( "jst4j-1.0.zip" ) )
+    .bind( "url", "http://jst4j.googlecode.com" ) // bind a variable into the template
+    .send();
     </blockquote>
 
     <p>

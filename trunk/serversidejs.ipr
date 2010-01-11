@@ -298,7 +298,7 @@
     <option name="myVersion" value="123" />
   </component>
   <component name="VcsDirectoryMappings">
-    <mapping directory="" vcs="" />
+    <mapping directory="" vcs="svn" />
   </component>
   <component name="WebServicesPlugin" addRequiredLibraries="true" />
   <component name="com.intellij.jsf.UserDefinedFacesConfigs">
@@ -383,6 +383,13 @@
         <root url="jar://$PROJECT_DIR$/lib/spring-core.jar!/" />
         <root url="jar://$PROJECT_DIR$/lib/spring-webmvc.jar!/" />
         <root url="jar://$PROJECT_DIR$/lib/spring-beans.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
+    </library>
+    <library name="javamail">
+      <CLASSES>
+        <root url="jar://$PROJECT_DIR$/lib/mail.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES />
