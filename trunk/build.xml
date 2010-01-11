@@ -1,0 +1,46 @@
+<project name="jst4j" basedir=".">
+
+    <property name="build.dir" value="${basedir}/classes"/>
+    <property name="src.dir" value="${basedir}/src"/>
+    <property name="lib.dir" value="${basedir}/lib"/>
+    <property name="release.dir" value="${basedir}/release"/>
+    <property name="jetty.dir" value="${basedir}/jetty-6.1.5/lib"/>
+    <property name="version" value="1.0"/>
+
+    <path id="libraries">
+        <fileset dir="${lib.dir}" includes="**/*.jar"/>
+        <fileset dir="${jetty.dir}" includes="servlet-api-*.jar"/>
+    </path>
+
+    <target name="clean">
+        <delete includeemptydirs="true">
+            <fileset dir="${build.dir}" includes="**/*"/>
+        </delete>
+        <delete>
+            <fileset dir="${release.dir}" includes="*.jar"/>
+        </delete>
+    </target>
+
+    <target name="build" depends="clean">
+        <mkdir dir="${build.dir}"/>
+        <javac destdir="${build.dir}" srcdir="${src.dir}" debug="yes" >
+            <classpath refid="libraries"/>
+        </javac>
+    </target>
+
+    <target name="package">
+        <mkdir dir="${release.dir}"/>
+
+        <jar destfile="${release.dir}/jst4j-${version}.jar">
+            <fileset dir="${src.dir}">
+                <include name="**/*.js"/>
+            </fileset>
+            <fileset dir="${build.dir}">
+                <include name="**/*"/>
+            </fileset>
+        </jar>
+    </target>
+
+    <target name="all" depends="build,package"/>
+
+</project>
