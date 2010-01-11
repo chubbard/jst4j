@@ -13,10 +13,10 @@
     </path>
 
     <target name="clean">
-        <delete includeemptydirs="true">
+        <delete includeemptydirs="true" failonerror="false">
             <fileset dir="${build.dir}" includes="**/*"/>
         </delete>
-        <delete>
+        <delete failonerror="false">
             <fileset dir="${release.dir}" includes="*.jar"/>
         </delete>
     </target>
@@ -41,6 +41,20 @@
         </jar>
     </target>
 
-    <target name="all" depends="build,package"/>
+    <target name="release">
+        <zip file="${release.dir}/jst4j-${version}.zip">
+            <fileset dir="${release.dir}" includes="*.jar"/>
+            <fileset dir="${basedir}">
+                <include name="lib/js.jar"/>
+                <include name="lib/log4j*.jar"/>
+                <include name="lib/commons-lang*.jar"/>
+                <include name="doc/**/*"/>
+                <include name="web/**/*"/>
+                <include name="src/**/*"/>
+            </fileset>
+        </zip>
+    </target>
+
+    <target name="all" depends="build,package,release"/>
 
 </project>
