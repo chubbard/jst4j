@@ -1,0 +1,21 @@
+.java {
+    white-space: pre;
+    border: 1px solid #999;
+    background-color: #ddd;
+    font-family: monospace;
+    overflow: auto;
+    padding-left: 10px;
+}
+
+.jst {
+    white-space: pre;
+    border: 1px solid #999;
+    background-color: #ddd;
+    font-family: monospace;
+    overflow: auto;
+    padding-left: 10px;
+}
+
+.highlight {
+    background-color: #eeee00;
+}

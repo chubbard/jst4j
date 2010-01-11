@@ -1,0 +1,19 @@
+<ul>
+<% if ( params.list.length ) { -%>
+    <% for( var i = 0; i < params.list.length; i++ ) { -%>
+        <% if( params.template ) { -%>
+            <li><%= params.template.format( params.list[i] ) %></li>
+        <% } else { %>
+            <li><%= params.list[i].toString() %></li>
+        <% } -%>
+    <% } -%>
+<% } else { -%>
+    <% for( var i = 0; i < params.list.size(); i++ ) { -%>
+        <% if( params.template ) { -%>
+            <li><%= params.template.format( params.list.get(i) ) %></li>
+        <% } else { %>
+            <li><%= params.list.get(i).toString() %></li>
+        <% } -%>
+    <% } %>
+<% } %>
+</ul>
