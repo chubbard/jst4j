@@ -7,6 +7,10 @@ public class JstViewResolver extends UrlBasedViewResolver {
 
     private JavascriptTemplateBean templates;
 
+    public JstViewResolver() {
+        setViewClass( requiredViewClass() ); 
+    }
+
     protected Class requiredViewClass() {
         return JstView.class;
     }
