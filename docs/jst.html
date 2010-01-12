@@ -127,7 +127,7 @@ Hello JST world!  It's me chuck.
         The second thing this demonstrates is how easily the Javascript code can
         call and use Java objects.  The request object is HttpServletRequest that you have
         access to in your serlvet.  Objects request and response are automatically
-        defined for all tempaltes and allow access to HttpServletRequest and
+        defined for all templates and allow access to HttpServletRequest and
         HttpServletResponse respectively.  You can see calling methods on Java
         objects is effortless, and looks remarkably like invoking any other method
         in Javascript.  There are some differences between Javascript and Java that you
@@ -785,5 +785,51 @@ emailer.email( "You should use Jst4J", "jst4j_is_awesome.jst", "jst4j_is_awesome
         There are several ways you can call send(), but this is the simplest way to send the
         email.  This requires Javamail package which is not apart of the jst4j pacakge.
     </p>
+
+    <h3>The Shell</h3>
+
+    <p>
+        The problem with new tools is always the lack of support in your IDEs.  The biggest
+        problem is lack of debugger support.  While we can always use print outs let's face
+        facts the debugger is much much faster.  While I can't give you a debugger, at least
+        not yet, I can give you the next best thing:  an interactive shell.
+    </p>
+
+    <p>
+        The shell is a command line program that let's you run your templates and see the
+        output of them.  Not only that it also let's you try out scripts just as you would
+        any shell.
+    </p>
+
+    <p>
+        To run the shell just execute <i>jst.shell.Shell</i> as you would any java program,
+        and you'll see something like the following:
+    </p>
+
+    <blockquote class="jst">
+Jst4j Shell version 1.0
+1 &gt;
+    </blockquote>
+
+    <p>
+        You can now simply type any javascript expression.  Here are a couple of examples:
+    </p>
+
+    <blockquote class="jst">
+Jst4j Shell version 1.0
+1 &gt; names = [ 'Jessie', 'Hank', 'Henry', 'Ellen', 'David' ]
+Jessie,Hank,Henry,Ellen,David
+2 &gt; names
+Jessie,Hank,Henry,Ellen,David
+3 &gt; names.filter( function( item ) { return item.indexOf("H") == 0; } )
+Hank,Henry
+4 &gt; names[0]
+Jessie
+5 &gt; hello = "Hello {0} you are using the shell."
+Hello {0} you are using the shell.
+6 &gt; hello.format("Charlie")
+Hello Charlie you are using the shell.
+7 &gt;
+    </blockquote>
 </body>
 </html>
