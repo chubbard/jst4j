@@ -1,10 +1,11 @@
 .java {
-    white-space: pre;
     border: 1px solid #999;
     background-color: #ddd;
     font-family: monospace;
     overflow: auto;
     padding-left: 10px;
+    margin-left: 40px;
+    margin-right: 40px;
 }
 
 .jst {
@@ -16,6 +17,20 @@
     padding-left: 10px;
 }
 
+.xml {
+    white-space: pre;
+    border: 1px solid #999;
+    background-color: #ddd;
+    font-family: monospace;
+    overflow: auto;
+    padding-left: 10px;
+}
+
 .highlight {
     background-color: #eeee00;
+}
+
+code {
+    font-family: Courier New, Courier;
+    font-size: 10pt; margin: 0px;
 }
