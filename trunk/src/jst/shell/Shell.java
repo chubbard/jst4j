@@ -24,9 +24,6 @@ public class Shell {
 
         execution = templateContext.start();
         execution.include("core/shell.js");
-//        execution.evaluate("function include( url ) { context.include( url ); }");
-//        execution.evaluate("function exit( code ) { code = code || 0; java.lang.System.exit( code ); }");
-//        execution.evaluate("function print() { for( var i = 0; i < arguments.length; i++ ) { java.lang.System.out.print( arguments[i] ); } java.lang.System.out.println(); }");
     }
 
     public Object eval( String input ) throws IOException {
@@ -49,10 +46,17 @@ public class Shell {
     }
 
     public static void main(String[] args) throws IOException {
+        System.out.println("Jst4J Shell version 1.0");
         Shell shell = new Shell();
 
         for( String arg : args ) {
-            shell.templateContext.addLoader( new FileTemplateLoader( new File( arg ) ) );
+            File path = new File( arg );
+            if( path.exists() ) {
+                System.out.printf("Adding script location %s%n", arg);
+                shell.templateContext.addLoader( new FileTemplateLoader( path ) );
+            } else {
+                System.out.printf( "WARNING: Script location %s does not exist.%n", path.getAbsolutePath() );
+            }
         }
 
         LineNumberReader in = new LineNumberReader( new InputStreamReader( System.in ) );
