@@ -7,6 +7,7 @@ Object.prototype.merge = function( obj, overwrite ) {
     return this;
 };
 
+/*
 Object.prototype.properties = function() {
     return Iterator( this._propertiesGenerator() );
 };
@@ -18,6 +19,7 @@ Object.prototype._propertiesGenerator = function() {
         }
     }
 };
+*/
 
 String.prototype.format = function() {
     var expr = /{(\d+)}/gi;
