@@ -23,7 +23,7 @@ public class Shell {
         templateContext.addLoader( new FileTemplateLoader( new File(".") ) );
 
         execution = templateContext.start();
-        execution.include("core/shell.jst");
+        execution.include("core/shell.js");
 //        execution.evaluate("function include( url ) { context.include( url ); }");
 //        execution.evaluate("function exit( code ) { code = code || 0; java.lang.System.exit( code ); }");
 //        execution.evaluate("function print() { for( var i = 0; i < arguments.length; i++ ) { java.lang.System.out.print( arguments[i] ); } java.lang.System.out.println(); }");
