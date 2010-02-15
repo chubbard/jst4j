@@ -7,7 +7,6 @@ Object.prototype.merge = function( obj, overwrite ) {
     return this;
 };
 
-/*
 Object.prototype.properties = function() {
     return Iterator( this._propertiesGenerator() );
 };
@@ -19,7 +18,6 @@ Object.prototype._propertiesGenerator = function() {
         }
     }
 };
-*/
 
 String.prototype.format = function() {
     var expr = /{(\d+)}/gi;
@@ -67,7 +65,7 @@ Function.prototype.curry = function() {
 
 if( !Array.prototype.reduce ) {
     Array.prototype.reduce = function( reducer, initial ) {
-        var reduction = initial || this[0];
+        var reduction = initial;
         for( var i = 0; i < this.length; i++ ) {
             reduction = reducer.call( this, reduction, this[i], i, this );
         }
@@ -80,4 +78,5 @@ Array.prototype.format = function( template ) {
         return template.format( item );
     } );
 }
+
 

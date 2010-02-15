@@ -9,7 +9,15 @@ function exit( code ) {
 
 function print() {
     for( var i = 0; i < arguments.length; i++ ) {
-        java.lang.System.out.print( arguments[i] );
+        shell.print( arguments[i] );
+        shell.print( ' ' );
     }
-    java.lang.System.out.println();
+    shell.println();
+}
+
+function version() {
+    if( arguments.length > 0 ) {
+        context.setLanguageVersion( arguments[0] );
+    }
+    return context.getLanguageVersion();
 }
