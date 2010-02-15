@@ -23,7 +23,7 @@ Template.prototype = {
     },
     layout : function( layout ) {
         context.setLayout( layout );
-        return this._layout.call( this );
+        return this.__layout.call( this );
     }
 };
 
