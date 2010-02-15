@@ -20,6 +20,10 @@ Template.prototype = {
     },
     include : function( jsScript ) {
         context.include( jsScript );
+    },
+    layout : function( layout ) {
+        context.setLayout( layout );
+        return this._layout.call( this );
     }
 };
 
