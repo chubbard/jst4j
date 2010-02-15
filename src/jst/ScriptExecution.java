@@ -27,6 +27,7 @@ public class ScriptExecution {
         this.template = template;
         this.context = context;
         this.jsContext = Context.enter();
+        this.jsContext.setLanguageVersion(TemplateContext.JAVASCRIPT_VERSION);
 
         scope = jsContext.newObject( context.getParent() );
         scope.setPrototype( context.getParent() );
@@ -39,6 +40,10 @@ public class ScriptExecution {
         if( Context.isValidLanguageVersion( version ) ) {
             jsContext.setLanguageVersion( version );
         }
+    }
+
+    public int getLanguageVersion() {
+        return jsContext.getLanguageVersion();
     }
 
     public Object invoke() throws IOException {
