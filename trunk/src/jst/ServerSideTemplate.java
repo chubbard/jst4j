@@ -97,7 +97,7 @@ public class ServerSideTemplate {
         if( functionDef != null & functionEnding == null ) {
             logger.warn("Template {0} uses a function definition scriplet (i.e. <* *> tags) but doesn't close it. with an ending definition.  It will be assumed closed, but it's not a great practice to be so loose.");
         }
-        currentBuffer.append( endFunctionDefinition() );
+        currentBuffer.append( "}\n" );
     }
 
     private void createFunctionDefinition(StringBuilder builder, String functionDefinition ) {
@@ -130,10 +130,6 @@ public class ServerSideTemplate {
             currentBuffer.append( scriptletContent );
             currentBuffer.append( "\n" );
         }
-    }
-
-    private String endFunctionDefinition() {
-        return "}\n";
     }
 
     private CharSequence createInlineExpression(String inlineExpression, boolean sanitize) {
