@@ -34,6 +34,7 @@ public class ScriptExecution {
         scope.setParentScope( null );
 
         addVariable( "context", this );
+        addVariable( "logger", logger );
     }
 
     public void setLanguageVersion( int version ) {

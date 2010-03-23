@@ -7,8 +7,10 @@ Template.prototype = {
     __evaluate : function() {
         if( this.__layout ) {
             this.contentForLayout = this.__template.call( this );
+            logger.info("Rendering with layout.");
             return this.__layout.call( this );
         } else {
+            logger.info("Rendering without layout.");
             return this.__template.call( this );
         }
     },

@@ -6,14 +6,31 @@ import jst.ScriptExecution;
 
 import java.io.IOException;
 import java.io.File;
-import java.io.LineNumberReader;
-import java.io.InputStreamReader;
+import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.ActionEvent;
+import java.util.*;
+import java.util.List;
 
 import org.mozilla.javascript.EcmaError;
 import org.mozilla.javascript.EvaluatorException;
 import org.mozilla.javascript.Context;
+import org.mozilla.javascript.JavaScriptException;
+
+import javax.swing.text.BadLocationException;
+import javax.swing.text.MutableAttributeSet;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.AttributeSet;
+import javax.swing.*;
 
 public class Shell {
+
+    JFrame frame;
+    JTextField commandField;
+    JTextPane commandOutput;
+    JScrollPane scrollPane;
+    List<String> commandHistory = new ArrayList<String>();
+    int currentCommand = 0;
 
     TemplateContext templateContext;
     ScriptExecution execution;
@@ -24,61 +41,136 @@ public class Shell {
 
         execution = templateContext.start();
         execution.include("core/shell.js");
+        execution.addVariable("shell", this);
     }
 
     public Object eval( String input ) throws IOException {
         return execution.evaluate( input );
     }
 
-    private String readCommand(LineNumberReader in, int numOfCommand ) throws IOException {
-        String command = "";
-        String line = null;
-        do {
-            line = in.readLine();
-            command += line + "\n";
-            if( line != null && execution.stringIsCompilableUnit(command) ) {
-                return command;
+    public void start() {
+        commandField = new JTextField();
+        commandField.getInputMap( JComponent.WHEN_FOCUSED ).put( KeyStroke.getKeyStroke( KeyEvent.VK_ENTER, 0, false ), "evaluate" );
+        commandField.getInputMap( JComponent.WHEN_FOCUSED ).put( KeyStroke.getKeyStroke( KeyEvent.VK_UP, 0, false ), "previousCommand" );
+        commandField.getInputMap( JComponent.WHEN_FOCUSED ).put( KeyStroke.getKeyStroke( KeyEvent.VK_DOWN, 0, false ), "nextCommand" );
+        commandField.getActionMap().put("evaluate", new AbstractAction() {
+            public void actionPerformed(ActionEvent event) {
+                try {
+                    String command = commandField.getText();
+                    if( command.length() > 0 ) {
+                        commandHistory.add( command );
+                        currentCommand = commandHistory.size();
+                        println(command);
+                        scrollPane.getVerticalScrollBar().setValue( scrollPane.getVerticalScrollBar().getMaximum() );
+                        Object value = eval( command );
+                        String result = Context.toString(value);
+                        println(result);
+                    }
+                } catch( EcmaError error ) {
+                    printError( "On line: " + error.lineNumber() + ": " + error.getErrorMessage() );
+                } catch( EvaluatorException ex ) {
+                    printError("On line: " + ex.lineNumber() + ": " + ex.getMessage() );
+                } catch( JavaScriptException e ) {
+                    printError("On line: " + e.lineNumber() + ": " + e.getMessage() );
+                } catch (IOException e) {
+                    printError( e.toString() );
+                } finally {
+                    print( "> " );
+                    commandField.setText("");
+                }
             }
-            System.out.print( numOfCommand + " * ");
-        } while( line != null );
+        });
+        commandField.getActionMap().put("previousCommand", new AbstractAction() {
+            public void actionPerformed(ActionEvent event) {
+                if( currentCommand > 0 ) {
+                    currentCommand--;
+                    commandField.setText( commandHistory.get( currentCommand ) );
+                    commandField.selectAll();
+                }
+            }
+        });
+        commandField.getActionMap().put("nextCommand", new AbstractAction() {
+            public void actionPerformed(ActionEvent event) {
+                if( currentCommand < commandHistory.size() - 1 ) {
+                    currentCommand++;
+                    commandField.setText( commandHistory.get( currentCommand ) );
+                    commandField.selectAll();
+                }
+            }
+        });
+        commandOutput = new JTextPane();
+        commandOutput.setEditable(false);
+        scrollPane = new JScrollPane( commandOutput );
 
-        return null;
+        frame = new JFrame("Jst4J Shell");
+        frame.setLayout( new BorderLayout( 5, 5 ) );
+        frame.add( scrollPane, BorderLayout.CENTER );
+        frame.add( commandField, BorderLayout.SOUTH );
+        frame.setSize( 800, 600 );
+        frame.setVisible(true);
+
+        println( "Jst4J Shell version 1.0" );
+        print( "> " );
+        commandField.requestFocus();
     }
 
-    public static void main(String[] args) throws IOException {
-        System.out.println("Jst4J Shell version 1.0");
-        Shell shell = new Shell();
+    public void println(String result) {
+        print( result );
+        print( "\n" );
+    }
 
-        for( String arg : args ) {
-            File path = new File( arg );
-            if( path.exists() ) {
-                System.out.printf("Adding script location %s%n", arg);
-                shell.templateContext.addLoader( new FileTemplateLoader( path ) );
-            } else {
-                System.out.printf( "WARNING: Script location %s does not exist.%n", path.getAbsolutePath() );
-            }
+    public void println() {
+        print("\n");
+    }
+
+    public void println(String result, AttributeSet attributes) {
+        print( result, attributes );
+        print( "\n", attributes );
+    }
+
+    public void print( String text ) {
+        print( text, null );
+    }
+
+    public void print( String text, AttributeSet attributes ) {
+        try {
+            commandOutput.getDocument().insertString( commandOutput.getDocument().getLength(), text, attributes );
+        } catch( BadLocationException ex ) {
+            JOptionPane.showMessageDialog( frame, ex.toString(), "Error", JOptionPane.ERROR_MESSAGE  );
         }
+    }
 
-        LineNumberReader in = new LineNumberReader( new InputStreamReader( System.in ) );
-        boolean done = false;
-        int command = 1;
-        do {
-            try {
-                System.out.print( command + " > ");
-                String source = shell.readCommand( in, command );
-                if( source != null ) {
-                    Object val = shell.eval( source );
-                    String result = Context.toString(val);
-                    System.out.println( result );
-                } else {
-                    done = true;
+    public void printf( String format, Object... args ) {
+        print( String.format(format,args) );
+    }
+
+    public void printError(String result) {
+        MutableAttributeSet error = commandOutput.getInputAttributes();
+        StyleConstants.setForeground(error, Color.RED);
+        print( result, error );
+        print( "\n", error );
+    }
+
+    public static void main(final String[] args) {
+        SwingUtilities.invokeLater( new Runnable() {
+            public void run() {
+                try {
+                    Shell shell = new Shell();
+
+                    for( String arg : args ) {
+                        File path = new File( arg );
+                        if( path.exists() ) {
+                            shell.println( String.format("Adding script location %s%n", arg) );
+                            shell.templateContext.addLoader( new FileTemplateLoader( path ) );
+                        } else {
+                            shell.printError( String.format("WARNING: Script location %s does not exist.%n", path.getAbsolutePath() ) );
+                        }
+                    }
+                    shell.start();
+                } catch( IOException ioe ) {
+                    JOptionPane.showMessageDialog( null, ioe.toString() );
                 }
-            } catch( EcmaError error ) {
-                System.out.println( "On line: " + error.lineNumber() + ": " + error.getErrorMessage() );
-            } catch( EvaluatorException ex ) {
-                System.out.println("On line: " + ex.lineNumber() + ": " + ex.getMessage() );
             }
-            command++;
-        } while( !done );
+        });
     }
 }
