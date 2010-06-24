@@ -5,9 +5,7 @@ import org.apache.log4j.Logger;
 import org.mozilla.javascript.*;
 
 import java.io.*;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
