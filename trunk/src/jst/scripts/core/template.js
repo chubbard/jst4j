@@ -15,7 +15,11 @@ Template.prototype = {
         }
     },
     collectContentFor : function( name, callback ) {
-        this[name] = callback;
+        if( !(callback instanceof Function) ) {
+            this[name] = function() { return callback; }
+        } else {
+            this[name] = callback;
+        }
     },
     render : function( partial, options ) {
         return context.execute( partial, options );
