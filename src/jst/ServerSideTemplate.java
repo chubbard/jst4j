@@ -2,18 +2,19 @@ package jst;
 
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.log4j.Logger;
-import org.mozilla.javascript.Script;
-import org.mozilla.javascript.Context;
-import org.mozilla.javascript.EvaluatorException;
-import org.mozilla.javascript.Scriptable;
+import org.mozilla.javascript.*;
 
 import java.io.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 import java.text.MessageFormat;
 
 public class ServerSideTemplate {
-    private static final Pattern jsDelimeters = Pattern.compile("<[%*]={0,2}(.+?)-?[*%]>", Pattern.MULTILINE );
+    private static final Pattern jsDelimeters = Pattern.compile("<[%@]={0,2}(.+?)-?[@%]>", Pattern.MULTILINE );
     private static final Logger logger = Logger.getLogger( ServerSideTemplate.class );
 
     private String name;
@@ -24,6 +25,7 @@ public class ServerSideTemplate {
     private long compiledTimestamp;
     private boolean isDebug = true;
     private String sanitizingFunction = null;
+    private Set<String> variables = new HashSet<String>();
 
     public ServerSideTemplate(String url, TemplateLoader scriptLoader, boolean isDebug ) throws FileNotFoundException {
         this.url = url;
@@ -35,7 +37,6 @@ public class ServerSideTemplate {
     private String createPageScript( CharSequence template ) {
         StringBuilder currentBuffer = new StringBuilder();
         Matcher matcher = jsDelimeters.matcher( template );
-        String functionDef = null, functionEnding = null;
         int start = 0;
         while( start != template.length() ) {
             if( matcher.find( start ) ) {
@@ -49,13 +50,9 @@ public class ServerSideTemplate {
                     currentBuffer.append( createInlineExpression( scriptletContent, false ) );
                 } else if( expression.startsWith("<%=") ) {
                     currentBuffer.append( createInlineExpression( scriptletContent, true ) );
-                } else if( expression.startsWith("<*") ) {
-                    if( functionDef == null ) {
-                        functionDef = scriptletContent;
-                    } else if( functionEnding == null ) {
-                        functionEnding = scriptletContent;
-                    } else {
-                        throw new TemplateException( this, "<* *> scriptlets have already been used for function definition and function termination." );
+                } else if( expression.startsWith("<@") ) {
+                    for( String variable : scriptletContent.split(",") ) {
+                        variables.add( variable.trim() );
                     }
                 } else {
                     addExpresion(currentBuffer, scriptletContent);
@@ -72,7 +69,7 @@ public class ServerSideTemplate {
                 start = template.length();
             }
         }
-        wrapFunction(currentBuffer, functionDef, functionEnding);
+        wrapFunction(currentBuffer);
 
         this.compiledTimestamp = System.currentTimeMillis();
         return currentBuffer.toString();
@@ -91,27 +88,17 @@ public class ServerSideTemplate {
         return start;
     }
 
-    private void wrapFunction(StringBuilder currentBuffer, String functionDef, String functionEnding) {
-        createFunctionDefinition( currentBuffer, functionDef );
+    private void wrapFunction(StringBuilder currentBuffer) {
+        currentBuffer.insert( 0, MessageFormat.format("Template.prototype.{0} = {1}\n", name, "function() {" ) );
         currentBuffer.append( "return this.__output.join('');\n");
-        if( functionDef != null & functionEnding == null ) {
-            logger.warn("Template {0} uses a function definition scriplet (i.e. <* *> tags) but doesn't close it. with an ending definition.  It will be assumed closed, but it's not a great practice to be so loose.");
-        }
         currentBuffer.append( "}\n" );
     }
 
-    private void createFunctionDefinition(StringBuilder builder, String functionDefinition ) {
-        if( functionDefinition == null ) {
-            functionDefinition = "function() {";
-        }
-        builder.insert( 0, MessageFormat.format("Template.prototype.{0} = {1}\n", name, functionDefinition ) );
-    }
-
     private String toFunctionName() {
-        return "_" + StringUtil.toCamelCase( stripExtension( url ) ).replaceAll( escapeSeperator(), "_" );
+        return "_" + StringUtil.toCamelCase( stripExtension( url ) ).replaceAll( escapeSeparator(), "_" );
     }
 
-    private String escapeSeperator() {
+    private String escapeSeparator() {
         return File.separator.equals("\\") ? "\\\\" : File.separator;
     }
 
@@ -224,6 +211,11 @@ public class ServerSideTemplate {
 
     public Object execute(Scriptable scope, Context context) throws IOException {
         include(context, scope);
+        for( String variable : variables ) {
+            if( !ScriptableObject.hasProperty(scope, variable) ) {
+                ScriptableObject.putProperty( scope, variable, null );
+            }
+        }
         return context.evaluateString( scope, MessageFormat.format("new Template( Template.prototype.{0} ).__evaluate();", name), "jst_evaluate", 1, null );
     }
 
