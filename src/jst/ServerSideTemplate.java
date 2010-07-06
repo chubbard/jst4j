@@ -5,8 +5,9 @@ import org.apache.log4j.Logger;
 import org.mozilla.javascript.*;
 
 import java.io.*;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 import java.text.MessageFormat;
@@ -23,7 +24,7 @@ public class ServerSideTemplate {
     private long compiledTimestamp;
     private boolean isDebug = true;
     private String sanitizingFunction = null;
-    private Set<String> variables = new HashSet<String>();
+    private List<String> formalParameters = new ArrayList<String>();
 
     public ServerSideTemplate(String url, TemplateLoader scriptLoader, boolean isDebug ) throws FileNotFoundException {
         this.url = url;
@@ -49,8 +50,9 @@ public class ServerSideTemplate {
                 } else if( expression.startsWith("<%=") ) {
                     currentBuffer.append( createInlineExpression( scriptletContent, true ) );
                 } else if( expression.startsWith("<@") ) {
-                    for( String variable : scriptletContent.split(",") ) {
-                        variables.add( variable.trim() );
+                    String[] vars = scriptletContent.split(",");
+                    for( String variable : vars ) {
+                        formalParameters.add( variable.trim() );
                     }
                 } else {
                     addExpresion(currentBuffer, scriptletContent);
@@ -87,7 +89,7 @@ public class ServerSideTemplate {
     }
 
     private void wrapFunction(StringBuilder currentBuffer) {
-        currentBuffer.insert( 0, MessageFormat.format("Template.prototype.{0} = {1}\n", name, "function() {" ) );
+        currentBuffer.insert( 0, MessageFormat.format( "function {0}( {1} ) '{'\n", name, StringUtil.join(formalParameters, "," ) ) );
         currentBuffer.append( "return this.__output.join('');\n");
         currentBuffer.append( "}\n" );
     }
@@ -170,7 +172,7 @@ public class ServerSideTemplate {
             if( logger.isInfoEnabled() ) {
                 logger.info("Compiling view for url: " + url );
             }
-            script = cx.compileString( createTemplate(), url, 1, null );
+            script = cx.compileString( getGeneratedSource(), url, 1, null );
             return script;
         } catch( EvaluatorException ex ) {
             throw new TemplateException( this, ex );
@@ -183,16 +185,18 @@ public class ServerSideTemplate {
 
     public String toString() {
         try {
-            return createTemplate();
+            return getGeneratedSource();
         } catch( IOException e ) {
             throw (RuntimeException)new RuntimeException( e.getMessage() ).initCause( e );
         }
     }
 
     private String createTemplate() throws IOException {
-        StringBuffer template = readTemplate( sourceLoader.load( url ) );
-        this.generatedSource = createPageScript( template);
-        return generatedSource;
+        formalParameters.clear();
+        InputStream stream = sourceLoader.load( url );
+        if( stream == null ) throw new IOException( url + " not found!" );
+        StringBuffer template = readTemplate( stream );
+        return createPageScript( template);
     }
 
     public Script getScript() {
@@ -203,18 +207,36 @@ public class ServerSideTemplate {
         return name;
     }
 
-    public String getGeneratedSource() {
+    public String getGeneratedSource() throws IOException {
+        if( generatedSource == null || shouldRefresh() ) {
+            generatedSource = createTemplate();
+        }
         return generatedSource;
     }
 
-    public Object execute(Scriptable scope, Context context) throws IOException {
-        include(context, scope);
-        for( String variable : variables ) {
-            if( !ScriptableObject.hasProperty(scope, variable) ) {
-                ScriptableObject.putProperty( scope, variable, null );
-            }
+    // todo consider moving this to the runtime since this is a generated method to kick off the intial template only.
+    public Object execute(Scriptable scope, Context context, ServerSideTemplate layout, Map<String,String> callByName) throws IOException {
+        List<String> actualParameters = new ArrayList<String>( callByName.size() );
+        for( String formalParam : formalParameters) {
+            actualParameters.add( callByName.get( formalParam ) );
         }
-        return context.evaluateString( scope, MessageFormat.format("new Template( Template.prototype.{0} ).__evaluate();", name), "jst_evaluate", 1, null );
+
+        include(context, scope);
+
+        String javaObj = "__java__";
+        ScriptableObject.putProperty( scope, javaObj, Context.javaToJS( this, scope ) );
+
+        StringBuilder startScript = new StringBuilder();
+        startScript.append("var __jst__ = function() {\n");
+        startScript.append(MessageFormat.format("  var template = new Template({0},{1});\n", getName(), javaObj) );
+        if( layout != null ) {
+            layout.include(context, scope);
+            startScript.append(MessageFormat.format("  template.__layout = {0};\n", layout.getName() ) );
+        }
+        startScript.append(MessageFormat.format( "  return template.evaluate({0});\n", StringUtil.join(actualParameters, ",") ) );
+        startScript.append("}");
+        startScript.append("__jst__()");
+        return context.evaluateString( scope, startScript.toString(), "jst_evaluate", 1, null );
     }
 
     public void include(Context context, Scriptable scope) throws IOException {
@@ -226,12 +248,6 @@ public class ServerSideTemplate {
         getScript().exec( context, scope );
     }
 
-    public void includeAsLayout( Context context, Scriptable scope ) throws IOException {
-        include( context, scope );
-        context.evaluateString( scope, MessageFormat.format("Template.prototype.__layout = Template.prototype.{0};", name), "jst_layout", 1, null );
-    }
-
-
     public String getSanitizingFunction() {
         return sanitizingFunction;
     }
@@ -240,11 +256,14 @@ public class ServerSideTemplate {
         this.sanitizingFunction = sanitizingFunction;
     }
 
+    public List<String> getFormalParameters() {
+        return formalParameters;
+    }
+
     public static void main( String[] args ) throws IOException {
-        FileTemplateLoader loader = new FileTemplateLoader( new File( "web/resources" ) );
+        FileTemplateLoader loader = new FileTemplateLoader( new File( "web/resources/test" ) );
         ServerSideTemplate script = new ServerSideTemplate( "timeOfDay.jst", loader, true);
         System.out.println( script.toString() );
-
 //        File layoutFile = new File( "web/resources/default.jst" );
 //        ServerSideTemplate layout = new ServerSideTemplate( "asset/list", layoutFile, true);
 //        System.out.println( layout.toString() );

@@ -18,7 +18,7 @@
 
     <h2>Philosophy</h2>
     <p>
-        All technology has a philosphy behind it.  Somehow the author is
+        All technology has a philosophy behind it.  Somehow the author is
         saying at one level or another "This is how I would solve this problem, and here
         is what matters and this other stuff doesn't."  All technology is an embodiment of
         philosophy, and so we generally choose technology based on their philosophies.
@@ -126,7 +126,7 @@ Hello JST world!  It's me chuck.
     <p>
         The second thing this demonstrates is how easily the Javascript code can
         call and use Java objects.  The request object is HttpServletRequest that you have
-        access to in your serlvet.  Objects request and response are automatically
+        access to in your servlet.  Objects request and response are automatically
         defined for all templates and allow access to HttpServletRequest and
         HttpServletResponse respectively.  You can see calling methods on Java
         objects is effortless, and looks remarkably like invoking any other method
@@ -182,17 +182,17 @@ Names that start with "CH":
     <p>
         Lastly, notice that some of the statement scriptlets end with -%&gt; rather than
         %&gt;.  Scriptlet tags ending in -%&gt; will erase any whitespace after them.  This
-        allows the statement scriptlet to really be invisible in the otuput.  Removing
-        unneccessary new lines, this is very helpful when using JST outside of HTML say
+        allows the statement scriptlet to really be invisible in the output.  Removing
+        unnecessary new lines, this is very helpful when using JST outside of HTML say
         to create plain text emails.
     </p>
 
     <p>
-        Now this template doesn't actually do anyting useful, but interesting is the methods
+        Now this template doesn't actually do anything useful, but interesting is the methods
         we're using.  The methods filter() and forEach() are apart of Javascript 1.6
         which most browsers do not yet support.  So while you can't use those on the client
         JST can take advantage of new changes to the language when they are ready.  You
-        don't have to worry about market pentration.
+        don't have to worry about market penetration.
     </p>
 
     <h3>Real World JST</h3>
@@ -285,7 +285,7 @@ public class TestJSTServlet extends HttpServlet {
         created in our servlet with our JST template.  What the exposeVariable() method does
         is binds an object (the second parameter) as a named variable in the template
         (first parameter).  You can expose as many variables as you wish by calling that
-        method multiple times.  This allows you to seperate your business logic from your
+        method multiple times.  This allows you to separate your business logic from your
         view logic.  Let's go further.
     </p>
 
@@ -623,8 +623,8 @@ public class TestJSTServlet extends HttpServlet {
 <font color="#808080">03</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#7f0055"><b>public&nbsp;static&nbsp;</b></font><font color="#7f0055"><b>void&nbsp;</b></font><font color="#000000">main</font><font color="#000000">(</font><font color="#000000">String</font><font color="#000000">[]&nbsp;</font><font color="#000000">args</font><font color="#000000">)&nbsp;</font><font color="#7f0055"><b>throws&nbsp;</b></font><font color="#000000">IOException&nbsp;</font><font color="#000000">{</font><br />
 <font color="#808080">04</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#000000">TemplateContext&nbsp;context&nbsp;=&nbsp;</font><font color="#7f0055"><b>new&nbsp;</b></font><font color="#000000">TemplateContext</font><font color="#000000">()</font><font color="#000000">;</font><br />
 <font color="#808080">05</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#000000">context.addLoader</font><font color="#000000">(&nbsp;</font><font color="#7f0055"><b>new&nbsp;</b></font><font color="#000000">FileTemplateLoader</font><font color="#000000">(&nbsp;</font><font color="#7f0055"><b>new&nbsp;</b></font><font color="#000000">File</font><font color="#000000">(</font><font color="#2a00ff">&#34;./test&#34;</font><font color="#000000">)&nbsp;)&nbsp;)</font><font color="#000000">;</font><br />
-<font color="#808080">06</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#000000">ScriptExecution&nbsp;execution&nbsp;=&nbsp;context.load</font><font color="#000000">(</font><font color="#2a00ff">&#34;/embedded-test.jst&#34;</font><font color="#000000">)</font><font color="#000000">;</font><br />
-<font color="#808080">07</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#000000">Object&nbsp;output&nbsp;=&nbsp;execution.addVariable</font><font color="#000000">(</font><font color="#2a00ff">&#34;name&#34;</font><font color="#000000">,&nbsp;</font><font color="#2a00ff">&#34;Charlie&#34;</font><font color="#000000">)</font><font color="#000000">.addVariable</font><font color="#000000">(</font><font color="#2a00ff">&#34;age&#34;</font><font color="#000000">,&nbsp;</font><font color="#990000">31</font><font color="#000000">)</font><font color="#000000">.invoke</font><font color="#000000">()</font><font color="#000000">;</font><br />
+<font color="#808080">06</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#000000">ScriptRuntime&nbsp;runtime&nbsp;=&nbsp;context.load</font><font color="#000000">(</font><font color="#2a00ff">&#34;/embedded-test.jst&#34;</font><font color="#000000">)</font><font color="#000000">;</font><br />
+<font color="#808080">07</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#000000">Object&nbsp;output&nbsp;=&nbsp;runtime.addVariable</font><font color="#000000">(</font><font color="#2a00ff">&#34;name&#34;</font><font color="#000000">,&nbsp;</font><font color="#2a00ff">&#34;Charlie&#34;</font><font color="#000000">)</font><font color="#000000">.addVariable</font><font color="#000000">(</font><font color="#2a00ff">&#34;age&#34;</font><font color="#000000">,&nbsp;</font><font color="#990000">31</font><font color="#000000">)</font><font color="#000000">.invoke</font><font color="#000000">()</font><font color="#000000">;</font><br />
 <font color="#808080">08</font>&nbsp;<font color="#ffffff"></font><br />
 <font color="#808080">09</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#000000">System.out.println</font><font color="#000000">(&nbsp;</font><font color="#000000">output&nbsp;</font><font color="#000000">)</font><font color="#000000">;</font><br />
 <font color="#808080">10</font>&nbsp;<font color="#ffffff">&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#000000">}</font><br />
@@ -641,8 +641,8 @@ public class EmbedTemplateTest {
     public static void main(String[] args) throws IOException {
         TemplateContext context = new TemplateContext();
         context.addLoader( new FileTemplateLoader( new File("./test") ) );
-        ScriptExecution execution = context.load("/embedded-test.jst");
-        Object output = execution.addVariable("name", "Charlie").addVariable("age", 31).invoke();
+        ScriptRuntime runtime = context.load("/embedded-test.jst");
+        Object output = runtime.addVariable("name", "Charlie").addVariable("age", 31).invoke();
 
         System.out.println( output );
     }
@@ -668,24 +668,23 @@ public class EmbedTemplateTest {
 
     <p>
         The next line loads a template by calling context.load() method.  The return type
-        is a ScriptExecution.  ScriptExecution instances are specific to this execution
-        of this script.  ScriptExecution's job is to allow you add object's into the
+        is a ScriptRuntime.  ScriptRuntime instances are specific to the execution
+        of this script.  ScriptRuntime's job is to allow you add object's into the
         script's environment before you invoke it.  This allows you to register Java
         instances you'd like available to the script, or add other Javascript code by
-        default into the script.  <b>Note</b>: Your scripts scan request some other code be included
+        default into the script.  <b>Note</b>: Your scripts can request some other code be included
         using the include() method.  This is the preferred way to include dependant Javascript
         files needed by your script because it's much more flexible.  Doing it in Java code
         creates dependancy between your Java code and your specific script you are invoking.
-        It's better to allow the script to declare these dependencies.  However, if you
-        creating framework like environment for your scripts you can do so in Java code.
+        It's better to allow the script to declare these dependencies.  However, if you are
+        creating a framework like environment for your scripts then you can do so in Java code.
     </p>
 
     <p>
         The next line does several things before calling the invoke() method.  It adds
         two variables from Java and registers them with variable names <i>name</i> and
-        <i>age</i>.  This allows our JST file to simply refer to these variables from the
-        global scope.  Finally, it calls invoke() to render the template, and prints the
-        output.
+        <i>age</i>.  This allows our JST file to simply refer to these variables.  Finally,
+        it calls invoke() to render the template, and prints the output.
     </p>
 
     <h3>Jst4J and Email</h3>

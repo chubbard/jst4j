@@ -1,17 +1,18 @@
-function Template( templateFunction ) {
+function Template( templateFunction, templateObject ) {
     this.__output = [];
     this.__template = templateFunction;
+    this.__templateObject = templateObject;
 }
 
 Template.prototype = {
-    __evaluate : function() {
+    evaluate : function() {
+        this.contentForLayout = this.__template.apply( this, Array.fromArguments(arguments) );
         if( this.__layout ) {
-            this.contentForLayout = this.__template.call( this );
             logger.info("Rendering with layout.");
-            return this.__layout.call( this );
+            return this.__layout.__template.call( this );
         } else {
             logger.info("Rendering without layout.");
-            return this.__template.call( this );
+            return this.contentForLayout;
         }
     },
     collectContentFor : function( name, callback ) {
@@ -22,14 +23,24 @@ Template.prototype = {
         }
     },
     render : function( partial, options ) {
-        return context.execute( partial, options );
+        var javaTemplateObject = runtime.read( partial );
+        var template = new Template( eval( '' + javaTemplateObject.getName() ), javaTemplateObject );
+        var formalParams = template.getFormalParameters();
+        var actualParams = [];
+        for each( var p in Iterator(formalParams) ) {
+            actualParams.push( options[p] );
+        }
+        return template.evaluate.apply( template, actualParams );
+    },
+    getFormalParameters: function() {
+      return this.__templateObject.getFormalParameters();  
     },
     include : function( jsScript ) {
-        context.include( jsScript );
+        runtime.include( jsScript );
     },
     layout : function( layout ) {
-        context.setLayout( layout );
-        return this.__layout.call( this );
+        var javaTemplateObject = runtime.read( layout );
+        this.__layout = new Template( eval( '' + javaTemplateObject.getName() ), javaTemplateObject );
     }
 };
 

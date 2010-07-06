@@ -39,4 +39,7 @@ public class ServletTemplateLoader implements TemplateLoader {
         return new File( parent, url );
     }
 
+    public String getRootUrl() {
+        return basePath;
+    }
 }

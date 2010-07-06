@@ -8,22 +8,26 @@ import org.mozilla.javascript.ScriptableObject;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
-public class ScriptExecution {
-    private static final Logger logger = Logger.getLogger( ScriptExecution.class );
+public class ScriptRuntime {
+    private static final Logger logger = Logger.getLogger( ScriptRuntime.class );
 
     private TemplateContext context;
     private ServerSideTemplate template;
+    private ServerSideTemplate layout;
     private Context jsContext;
     private Scriptable scope;
+    private Map<String,String> variableMappings = new HashMap<String,String>();
 
-    public ScriptExecution( TemplateContext context ) {
+    public ScriptRuntime( TemplateContext context ) {
         this( null, context );
     }
 
-    public ScriptExecution( ServerSideTemplate template, TemplateContext context ) {
+    public ScriptRuntime( ServerSideTemplate template, TemplateContext context ) {
         this.template = template;
         this.context = context;
         this.jsContext = Context.enter();
@@ -33,8 +37,8 @@ public class ScriptExecution {
         scope.setPrototype( context.getParent() );
         scope.setParentScope( null );
 
-        addVariable( "context", this );
-        addVariable( "logger", logger );
+        addGlobalVariable( "runtime", this );
+        addGlobalVariable( "logger", logger );
     }
 
     public void setLanguageVersion( int version ) {
@@ -50,13 +54,13 @@ public class ScriptExecution {
     public Object invoke() throws IOException {
         try {
             logger.debug( "Invoking script " + template.getName() );
-            return template.execute( scope, jsContext );
+            return template.execute( scope, jsContext, layout, variableMappings );
         } finally {
             Context.exit();
         }
     }
 
-    public ScriptExecution mixin(String mixinName, Object mixin) {
+    public ScriptRuntime mixin(String mixinName, Object mixin) {
         addVariable( "Template.__" + mixinName, mixin );
 
         Set<String> methods = new HashSet<String>();
@@ -76,10 +80,7 @@ public class ScriptExecution {
         return this;
     }
 
-    public ScriptExecution addVariable(String varName, Object variable) {
-        if( logger.isDebugEnabled() ) {
-            logger.debug( "Adding variable " + varName );
-        }
+    public ScriptRuntime addGlobalVariable( String varName, Object variable ) {
         Scriptable current = scope;
         String[] varPath = varName.split("\\.");
         for( int i = 0; current != null && i < varPath.length; i++ ) {
@@ -98,16 +99,28 @@ public class ScriptExecution {
         return this;
     }
 
+    public ScriptRuntime addVariable(String varName, Object variable) {
+        String globalVariable = "__jstVariable" + variableMappings.size() + 1;
+        if( logger.isDebugEnabled() ) {
+            logger.debug( "Adding variable " + globalVariable + "=" + varName );
+        }
+        variableMappings.put( varName, globalVariable );
+        ScriptableObject.putProperty( scope, globalVariable, Context.javaToJS( variable, scope ) );
+        return this;
+    }
+
     public Object execute(Script script) {
         return script.exec( jsContext, scope );
     }
 
-    public Object execute( String url, Scriptable data ) throws IOException {
+    public ServerSideTemplate read( String url ) throws IOException {
         if( !url.endsWith(".jst") ) {
             url += ".jst";
         }
-        ScriptExecution execution = context.load( url );        
-        return execution.evaluate( data );
+
+        ServerSideTemplate template = context.loadTemplate( url );
+        template.include( jsContext, scope );
+        return template;
     }
 
     public void include(String url) throws IOException {
@@ -116,13 +129,7 @@ public class ScriptExecution {
     }
 
     public void setLayout(String url) throws IOException {
-        ServerSideTemplate layout = context.loadTemplate( url );
-        layout.includeAsLayout( jsContext, scope );
-    }
-
-    public Object evaluate(Scriptable data) throws IOException {
-        addVariable( "params", data );
-        return invoke();
+        layout = context.loadTemplate( url );
     }
 
     public Object evaluate( String script ) throws IOException {

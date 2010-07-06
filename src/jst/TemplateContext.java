@@ -30,7 +30,7 @@ public class TemplateContext {
         this.loaders.add( new ResourceTemplateLoader("jst/scripts") );
     }
 
-    public TemplateContext initializeTopLevel() throws IOException {
+    protected TemplateContext initializeTopLevel() throws IOException {
         Context context;
         try {
             context = Context.enter();
@@ -55,14 +55,20 @@ public class TemplateContext {
         return this;
     }
 
-    public ScriptExecution load( String url ) throws IOException {
-        ScriptExecution execution = new ScriptExecution( loadTemplate(url), this );
-        execution.execute( defaultScript );
-        return execution;
+    public List<TemplateLoader> getLoaders() {
+        return loaders;
     }
 
-    public ScriptExecution start() throws IOException {
-        return new ScriptExecution( this );
+    public ScriptRuntime load( String url ) throws IOException {
+        ScriptRuntime runtime = new ScriptRuntime( loadTemplate(url), this );
+        runtime.execute( defaultScript );
+        return runtime;
+    }
+
+    public ScriptRuntime start() throws IOException {
+        ScriptRuntime runtime = new ScriptRuntime( this );
+        runtime.execute( defaultScript );
+        return runtime;
     }
 
     public String getSanitizingFunction() {

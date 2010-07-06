@@ -19,9 +19,12 @@ public class FileTemplateLoader implements TemplateLoader {
         }
     }
 
-
     public boolean shouldRefresh(String url, long compiledTimestamp ) {
         File scriptFile = new File( home, url );
         return compiledTimestamp < scriptFile.lastModified();
+    }
+
+    public String getRootUrl() {
+        return home.getAbsolutePath();
     }
 }

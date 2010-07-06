@@ -2,7 +2,7 @@ package jst.shell;
 
 import jst.TemplateContext;
 import jst.FileTemplateLoader;
-import jst.ScriptExecution;
+import jst.ScriptRuntime;
 
 import java.io.IOException;
 import java.io.File;
@@ -12,6 +12,7 @@ import java.awt.event.ActionEvent;
 import java.util.*;
 import java.util.List;
 
+import jst.TemplateLoader;
 import org.mozilla.javascript.EcmaError;
 import org.mozilla.javascript.EvaluatorException;
 import org.mozilla.javascript.Context;
@@ -33,19 +34,22 @@ public class Shell {
     int currentCommand = 0;
 
     TemplateContext templateContext;
-    ScriptExecution execution;
+    ScriptRuntime runtime;
+    String[] filePaths;
 
-    public Shell() throws IOException {
+    public Shell(String[] filePaths) throws IOException {
         templateContext = new TemplateContext();
         templateContext.addLoader( new FileTemplateLoader( new File(".") ) );
 
-        execution = templateContext.start();
-        execution.include("core/shell.js");
-        execution.addVariable("shell", this);
+        runtime = templateContext.start();
+        runtime.include("core/shell.js");
+        runtime.addGlobalVariable("shell", this);
+
+        this.filePaths = filePaths;
     }
 
     public Object eval( String input ) throws IOException {
-        return execution.evaluate( input );
+        return runtime.evaluate( input );
     }
 
     public void start() {
@@ -69,7 +73,7 @@ public class Shell {
                 } catch( EcmaError error ) {
                     printError( "On line: " + error.lineNumber() + ": " + error.getErrorMessage() );
                 } catch( EvaluatorException ex ) {
-                    printError("On line: " + ex.lineNumber() + ": " + ex.getMessage() );
+                    printError("On line: " + ex.lineNumber() + ": " + ex.getMessage() + "(" + ex.getLineSource() + ")" );
                 } catch( JavaScriptException e ) {
                     printError("On line: " + e.lineNumber() + ": " + e.getMessage() );
                 } catch (IOException e) {
@@ -110,8 +114,28 @@ public class Shell {
         frame.setVisible(true);
 
         println( "Jst4J Shell version 1.0" );
+
+        for( String arg : filePaths ) {
+            File path = new File( arg );
+            if( path.exists() ) {
+                println( String.format("Adding script location %s", arg) );
+                templateContext.addLoader( new FileTemplateLoader( path ) );
+            } else {
+                printError( String.format("WARNING: Script location %s does not exist.%n", path.getAbsolutePath() ) );
+            }
+        }
+
         print( "> " );
         commandField.requestFocus();
+    }
+
+    public List<String> getPaths() {
+        List<TemplateLoader> loaders = templateContext.getLoaders();
+        List<String> paths = new ArrayList<String>( loaders.size() );
+        for( TemplateLoader loader : loaders ) {
+            paths.add( loader.getRootUrl() );
+        }
+        return paths;
     }
 
     public void println(String result) {
@@ -155,17 +179,8 @@ public class Shell {
         SwingUtilities.invokeLater( new Runnable() {
             public void run() {
                 try {
-                    Shell shell = new Shell();
+                    Shell shell = new Shell( args );
 
-                    for( String arg : args ) {
-                        File path = new File( arg );
-                        if( path.exists() ) {
-                            shell.println( String.format("Adding script location %s%n", arg) );
-                            shell.templateContext.addLoader( new FileTemplateLoader( path ) );
-                        } else {
-                            shell.printError( String.format("WARNING: Script location %s does not exist.%n", path.getAbsolutePath() ) );
-                        }
-                    }
                     shell.start();
                 } catch( IOException ioe ) {
                     JOptionPane.showMessageDialog( null, ioe.toString() );
