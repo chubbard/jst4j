@@ -1,18 +1,19 @@
+<@ list, template @>
 <ul>
-<% if ( params.list.length ) { -%>
-    <% for( var i = 0; i < params.list.length; i++ ) { -%>
-        <% if( params.template ) { -%>
-            <li><%= params.template.format( params.list[i] ) %></li>
+<% if ( list.length ) { -%>
+    <% for( var i = 0; i < list.length; i++ ) { -%>
+        <% if( template ) { -%>
+            <li><%= template.format( list[i] ) %></li>
         <% } else { %>
-            <li><%= params.list[i].toString() %></li>
+            <li><%= list[i].toString() %></li>
         <% } -%>
     <% } -%>
 <% } else { -%>
-    <% for( var i = 0; i < params.list.size(); i++ ) { -%>
-        <% if( params.template ) { -%>
-            <li><%= params.template.format( params.list.get(i) ) %></li>
+    <% for( var i = 0; i < list.size(); i++ ) { -%>
+        <% if( template ) { -%>
+            <li><%= template.format( list.get(i) ) %></li>
         <% } else { %>
-            <li><%= params.list.get(i).toString() %></li>
+            <li><%= list.get(i).toString() %></li>
         <% } -%>
     <% } %>
 <% } %>

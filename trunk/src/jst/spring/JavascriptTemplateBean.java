@@ -1,8 +1,8 @@
 package jst.spring;
 
+import jst.ScriptRuntime;
 import jst.TemplateContext;
 import jst.FileTemplateLoader;
-import jst.ScriptExecution;
 
 import java.util.Map;
 import java.util.List;
@@ -47,28 +47,28 @@ public class JavascriptTemplateBean {
         this.resourcePaths = resourcePaths;
     }
 
-    public ScriptExecution load( String url ) throws IOException {
+    public ScriptRuntime load( String url ) throws IOException {
         initializeContext();
 
-        ScriptExecution execution = context.load( url );
+        ScriptRuntime runtime = context.load( url );
 
         for( String name : variables.keySet() ) {
-            execution.addVariable( name, variables.get( name ) );
+            runtime.addVariable( name, variables.get( name ) );
         }
 
         for( String name : mixins.keySet() ) {
-            execution.mixin( name, mixins.get( name ) );
+            runtime.mixin( name, mixins.get( name ) );
         }
 
-        return execution;
+        return runtime;
     }
 
     public Object evaluate( String url, Map<String,Object> data ) throws IOException {
-        ScriptExecution execution = load(url);
+        ScriptRuntime runtime = load(url);
         for( String key : data.keySet() ) {
-            execution.addVariable( key, data.get(key) );
+            runtime.addVariable( key, data.get(key) );
         }
-        return execution.invoke();
+        return runtime.invoke();
     }
 
     private void initializeContext() throws IOException {

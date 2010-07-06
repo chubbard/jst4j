@@ -1,5 +1,6 @@
 package jst.http;
 
+import jst.ScriptRuntime;
 import org.apache.log4j.Logger;
 
 import javax.servlet.*;
@@ -9,7 +10,6 @@ import java.io.*;
 import java.util.Enumeration;
 
 import jst.TemplateContext;
-import jst.ScriptExecution;
 import jst.FileTemplateLoader;
 
 public class JavascriptFilter implements Filter {
@@ -60,35 +60,35 @@ public class JavascriptFilter implements Filter {
         String scriptName = servletRequest.getAttribute(TemplateDispatcher.JST_SCRIPT ).toString();
         //String scriptName = ((HttpServletRequest)servletRequest).getRequestURI();
 
-        ScriptExecution execution = initializeScript( scriptName, (HttpServletRequest)servletRequest, (HttpServletResponse)servletResponse );
+        ScriptRuntime runtime = initializeScript( scriptName, (HttpServletRequest)servletRequest, (HttpServletResponse)servletResponse );
         
-        writeResponse( servletResponse, execution.invoke() );
+        writeResponse( servletResponse, runtime.invoke() );
     }
 
-    private ScriptExecution initializeScript(String scriptName, HttpServletRequest request, HttpServletResponse response) throws IOException {
-        ScriptExecution execution = templateContext.load( scriptName );
+    private ScriptRuntime initializeScript(String scriptName, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        ScriptRuntime runtime = templateContext.load( scriptName );
 
         Enumeration attributes = request.getAttributeNames();
         while( attributes.hasMoreElements() ) {
             String name = (String) attributes.nextElement();
             if( name.startsWith( TemplateDispatcher.JST_MIXIN ) ) {
                 String mixinName = name.substring( TemplateDispatcher.JST_MIXIN.length() );
-                execution.mixin( mixinName, request.getAttribute( name ) );
+                runtime.mixin( mixinName, request.getAttribute( name ) );
             } else if( name.equalsIgnoreCase( TemplateDispatcher.JST_LAYOUT ) ) {
-                execution.setLayout( request.getAttribute( name ).toString() );
+                runtime.setLayout( request.getAttribute( name ).toString() );
             } else if( name.startsWith(TemplateDispatcher.JST_VARIABLE) ) {
                 String varName = name.substring( TemplateDispatcher.JST_VARIABLE.length() );
-                execution.addVariable( varName, request.getAttribute( name ) );
+                runtime.addVariable( varName, request.getAttribute( name ) );
             } else if( name.startsWith( TemplateDispatcher.JST_SCRIPT_MIXIN ) ) {
-                execution.include( request.getAttribute( name ).toString() );
+                runtime.include( request.getAttribute( name ).toString() );
             }
         }
 
-        execution.addVariable( "request", request );
-        execution.addVariable( "response", response );
-        execution.addVariable( "servletContext", servletContext );
+        runtime.addVariable( "request", request );
+        runtime.addVariable( "response", response );
+        runtime.addVariable( "servletContext", servletContext );
 
-        return execution;
+        return runtime;
     }
 
     private void writeResponse(ServletResponse servletResponse, Object result) throws IOException {

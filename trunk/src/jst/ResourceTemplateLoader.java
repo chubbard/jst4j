@@ -21,4 +21,8 @@ public class ResourceTemplateLoader implements TemplateLoader {
     public boolean shouldRefresh(String url, long compiledTimestamp) {
         return false;
     }
+
+    public String getRootUrl() {
+        return basePath;
+    }
 }
