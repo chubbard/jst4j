@@ -412,6 +412,12 @@ public class TestJSTServlet extends HttpServlet {
         used in the layout we saw above.
     </p>
 
+    <p>
+        You may choose to put your layout calls inside your jst files by using the this.layout(url) method.
+        This allows you to encapsulate the layout choice in the view and away from the controller.
+        However, you might have to repeat layout definitions across multiple views.  It is up to you.
+    </p>
+
     <h3>Rendering Partial Templates</h3>
 
     <p>
@@ -426,14 +432,14 @@ public class TestJSTServlet extends HttpServlet {
     The template above puts the output from the template named "partial" into that template's output.  It acts
     very much like a function call that returns a String.  In this case "partial" template is given three
     parameters named foo, bar, and baz.  These are exposed as variables the partial template can access
-    directly.  This allows for parameterized output of your partial templates.
+    directly.  This allows for parametrized output of your partial templates.
 
     <h3>Includes</h3>
 
     <p>
-        Includes are another method for seperating code into reusable files.  This makes reusing code
+        Includes are another method for separating code into reusable files.  This makes reusing code
         very easy.  Lots of frameworks make it difficult to create view utility methods.  While you
-        can seperate business logic you still need lots of methods specifically for handling view logic.
+        can separate business logic you still need lots of methods specifically for handling view logic.
     </p>
 
     <blockquote class="jst">
@@ -591,7 +597,7 @@ public class TestJSTServlet extends HttpServlet {
         plain old javascript files between the client and the server.  These might be
         simple utility methods for manipulating strings, numbers, etc.  Keep in mind
         your server side javascript environment is NOT the same as your browser
-        environment.  Things like DOM model for the document, certain globals like window,
+        environment.  Things like DOM model for the document, certain global variables like window,
         are not valid in JST templates.  But, you can still share code if it shares
         commonalities between your client and server.
     </p>
@@ -661,7 +667,7 @@ public class EmbedTemplateTest {
 
     <p>
         The next thing it does is register a TemplateLoader with the TemplateContext.
-        TemplateLoaders are responsibile for the details of finding scripts and loading
+        TemplateLoaders are responsible for the details of finding scripts and loading
         them for the TemplateContext.  You can have as many TemplateLoaders as you wish
         so you can support pulling scripts from many locations.
     </p>
@@ -675,7 +681,7 @@ public class EmbedTemplateTest {
         default into the script.  <b>Note</b>: Your scripts can request some other code be included
         using the include() method.  This is the preferred way to include dependant Javascript
         files needed by your script because it's much more flexible.  Doing it in Java code
-        creates dependancy between your Java code and your specific script you are invoking.
+        creates dependency between your Java code and your specific script you are invoking.
         It's better to allow the script to declare these dependencies.  However, if you are
         creating a framework like environment for your scripts then you can do so in Java code.
     </p>
@@ -690,7 +696,7 @@ public class EmbedTemplateTest {
     <h3>Jst4J and Email</h3>
 
     <p>
-        Email is another area where it would be nice to use something like JST to subtituted
+        Email is another area where it would be nice to use something like JST to substitute
         in parameters much like we do for our web pages.  Good news Jst4J comes with a
         package out of the box for doing integration with Javamail.  Let's look at how
         we can configure Spring context with our Emailer class:
@@ -829,6 +835,14 @@ Hello {0} you are using the shell.
 6 &gt; hello.format("Charlie")
 Hello Charlie you are using the shell.
 7 &gt;
+    </blockquote>
+
+    <p>
+        You can pass the jst script load path on the command line doing:
+    </p>
+
+    <blockquote class="jst">
+        java jst.shell.Shell &lt;path to jst directory1&gt; &lt;path to jst directory2&gt;...&lt;path to jst directoryn&gt;
     </blockquote>
 </body>
 </html>
