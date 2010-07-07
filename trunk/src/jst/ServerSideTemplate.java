@@ -234,7 +234,7 @@ public class ServerSideTemplate {
             startScript.append(MessageFormat.format("  template.__layout = {0};\n", layout.getName() ) );
         }
         startScript.append(MessageFormat.format( "  return template.evaluate({0});\n", StringUtil.join(actualParameters, ",") ) );
-        startScript.append("}");
+        startScript.append("};\n");
         startScript.append("__jst__()");
         return context.evaluateString( scope, startScript.toString(), "jst_evaluate", 1, null );
     }
