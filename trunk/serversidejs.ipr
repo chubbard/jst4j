@@ -67,6 +67,7 @@
       <entry name="?*.tld" />
       <entry name="?*.jst" />
       <entry name="?*.js" />
+      <entry name="?*.wtkx" />
     </wildcardResourcePatterns>
     <annotationProcessing enabled="false" useClasspath="true" />
   </component>
@@ -277,6 +278,7 @@
       <words>
         <w>args</w>
         <w>javascript</w>
+        <w>scriptable</w>
         <w>scriptlet</w>
         <w>scriptlets</w>
       </words>
@@ -397,6 +399,18 @@
       <CLASSES>
         <root url="jar://$PROJECT_DIR$/lib/mail.jar!/" />
         <root url="jar://$PROJECT_DIR$/lib/activation.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
+    </library>
+    <library name="pivot">
+      <CLASSES>
+        <root url="jar://$PROJECT_DIR$/lib/pivot-web-1.4.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/pivot-wtk-1.4.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/pivot-wtk-terra-1.4.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/pivot-tools-1.4.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/pivot-core-1.4.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/pivot-charts-1.4.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES />
