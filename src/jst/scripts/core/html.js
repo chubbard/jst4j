@@ -1,5 +1,9 @@
 importPackage( Packages.jst );
 
+function getProperty( obj, property ) {
+    return obj[property] instanceof Function ? obj[property]() : obj[property];
+}
+
 var Html = {
     tag : function( tagname, attrs, body ) {
         var t = [ "<", tagname ];
@@ -14,10 +18,10 @@ var Html = {
         }
         if( body ) {
             t.push(">");
-            if( body instanceof String ) {
-                t.push(body);
-            } else if( body instanceof Array ) {
+            if( body instanceof Array ) {
+                t.push("\n");
                 t.push( body.join("\n") );
+                t.push("\n");
             } else {
                 t.push( body );
             }
@@ -27,6 +31,7 @@ var Html = {
         } else {
             t.push("/>");
         }
+
         return t.join("");
     },
     css : function( url, options ) {
@@ -105,14 +110,31 @@ var Form = {
     select : function( name, keys, select, options ) {
         options = options || {};
         options.name = name;
-        // todo keys should just be a map possibly, or something simple (not array of maps)
-        var opts = keys.map( function( item, index, arr ) {
-            if( select && select == item.value || select == index ) {
-                return Html.tag("option", { value: item.value }, item.text )
+
+        var lblField = options.label || "text";
+        var valField = options.value  || "value";
+        delete options.label;
+        delete options.value;
+
+        var opts = [];
+        for( var index = 0; index < keys.length; index++ ) {
+            var item = keys[index];
+            if( item instanceof Object ) {
+                var label = getProperty( item, lblField );
+                var value = getProperty( item, valField );
+                if( select != null && (select == value || select == index) ) {
+                    opts.push( Html.tag("option", { value: value, selected: "selected" }, label ) );
+                } else {
+                    opts.push( Html.tag("option", { value: value }, label ) );
+                }
             } else {
-                return Html.tag("option", { value: item.value, selected: "selected" }, item.text )
+                if( select != null && (select == value || select == index) ) {
+                    opts.push( Html.tag("option", { value: item, selected: "selected" }, item ) );
+                } else {
+                    opts.push( Html.tag("option", {value: item}, item ) );
+                }
             }
-        } );
+        }
 
         return Html.tag( "select", options, opts );
     },

@@ -2,6 +2,8 @@ function Template( templateFunction, templateObject ) {
     this.__output = [];
     this.__template = templateFunction;
     this.__templateObject = templateObject;
+//    this.__scripts = [];
+//    this.__styles = [];
 }
 
 Template.prototype = {
@@ -41,6 +43,12 @@ Template.prototype = {
     layout : function( layout ) {
         var javaTemplateObject = runtime.read( layout );
         this.__layout = new Template( eval( '' + javaTemplateObject.getName() ), javaTemplateObject );
+//    },
+//    script : function( url, options ) {
+//        this.__scripts.push( Html.script(url,options) );
+//    },
+//    css : function( url, options ) {
+//        this.__styles.push( Html.css(url,options) );
     }
 };
 

@@ -11,6 +11,15 @@ function load( url ) {
 }
 
 /**
+ * Used to include a plain old javascript file into the shell.
+ *
+ * @param url the path to the file relative to one of the file paths registered in the shell.
+ */
+function include( url ) {
+    runtime.include( url );
+}
+
+/**
  * Function that will exit the shell.
  *
  * @param code optional parameter used to set as the return code for the process.

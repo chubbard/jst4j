@@ -31,6 +31,7 @@ public class ScriptRuntime {
         this.template = template;
         this.context = context;
         this.jsContext = Context.enter();
+        this.jsContext.setWrapFactory( new EnhancedWrapFactory() );
         this.jsContext.setLanguageVersion(TemplateContext.JAVASCRIPT_VERSION);
 
         scope = jsContext.newObject( context.getParent() );

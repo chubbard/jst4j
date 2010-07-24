@@ -39,6 +39,7 @@
       </library>
     </orderEntry>
     <orderEntry type="library" name="javamail" level="project" />
+    <orderEntry type="library" name="pivot" level="project" />
   </component>
   <component name="RSpecModuleSettingsStorage">
     <RSPEC_MODULE_SETTINGS_STORAGE_ID NAME="RSPEC_SUPPORT_TYPE" VALUE="NONE" />
