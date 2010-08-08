@@ -18,16 +18,20 @@ public class Emailer {
     private static final Logger logger = Logger.getLogger(Emailer.class);
 
     private String from;
+    private String username;
+    private String password;
     private Properties mailProperties;
     private JavascriptTemplateBean jst;
 
     protected Emailer() {
     }
 
-    public Emailer( JavascriptTemplateBean jst, Properties mailProperties, String from) throws IOException {
+    public Emailer( JavascriptTemplateBean jst, Properties mailProperties, String from, String username, String password) throws IOException {
         this.jst = jst;
         this.mailProperties = mailProperties;
         this.from = from;
+        this.username = username;
+        this.password = password;
     }
 
     public Email email( String subject, String mailTemplate, String htmlTemplate ) {
@@ -148,7 +152,7 @@ public class Emailer {
                 mimeMessage.saveChanges();
 
                 Transport transport = session.getTransport("smtp");
-                transport.connect();
+                transport.connect(username, password);
                 transport.sendMessage(mimeMessage, mimeMessage.getAllRecipients());
                 transport.close();
             } catch( Exception mex ) {
