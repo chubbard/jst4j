@@ -1,13 +1,14 @@
 function Template( templateFunction, templateObject ) {
-    this.__output = [];
     this.__template = templateFunction;
     this.__templateObject = templateObject;
-//    this.__scripts = [];
-//    this.__styles = [];
 }
 
 Template.prototype = {
     evaluate : function() {
+        this.__collectedContent = {};
+        this.__scripts = {};
+        this.__styles = {};
+        this.__output = [];
         this.contentForLayout = this.__template.apply( this, Array.fromArguments(arguments) );
         if( this.__layout ) {
             logger.info("Rendering with layout.");
@@ -18,10 +19,23 @@ Template.prototype = {
         }
     },
     collectContentFor : function( name, callback ) {
-        if( !(callback instanceof Function) ) {
-            this[name] = function() { return callback; }
-        } else {
-            this[name] = callback;
+        if( !this.__collectedContent[name] ) this.__collectedContent[name] = [];
+        this.__collectedContent[name].push( callback );
+
+        if( !this[name] ) {
+            this[name] = function() {
+                var output = [];
+                var content = this.__collectedContent[name];
+                for( var i = 0; i < content.length; i++ ) {
+                    var current = content[i];
+                    if( current instanceof Function ) {
+                        output.push( current.call(this) );
+                    } else {
+                        output.push( current );
+                    }
+                }
+                return output.join('');
+            }
         }
     },
     render : function( partial, options ) {
@@ -43,12 +57,32 @@ Template.prototype = {
     layout : function( layout ) {
         var javaTemplateObject = runtime.read( layout );
         this.__layout = new Template( eval( '' + javaTemplateObject.getName() ), javaTemplateObject );
-//    },
-//    script : function( url, options ) {
-//        this.__scripts.push( Html.script(url,options) );
-//    },
-//    css : function( url, options ) {
-//        this.__styles.push( Html.css(url,options) );
+    },
+    scripts : function( script ) {
+        if( script ) {
+            if( !this.__scripts[script] ) {
+                this.__scripts[script] = script;
+            }
+        } else {
+            var output = [];
+            for each( var key in this.__scripts.properties() ) {
+                output.push( Html.script(this.__scripts[key]) );
+            }
+            return output.join("\n");
+        }
+    },
+    styles : function( style ) {
+        if( style ) {
+            if( !this.__styles[style] ) {
+                this.__styles[style] = style;
+            }
+        } else {
+            var output = [];
+            for each( var key in this.__styles.properties() ) {
+                output.push( Html.css(this.__styles[key]) );
+            }
+            return output.join("\n");
+        }
     }
 };
 

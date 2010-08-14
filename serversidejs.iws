@@ -67,22 +67,21 @@
     <option name="USER" value="" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" readonly="true" id="0f76144d-ba4b-447b-905e-4051782f9456" name="Default" comment="Fix autogen in execute() code.  Fix up the docs too.">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/jst/ScriptableNativeJavaObject.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/jst4j.iml" afterPath="$PROJECT_DIR$/jst4j.iml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/jst/NativeListAdapter.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/jst/scripts/core/shell.js" afterPath="$PROJECT_DIR$/src/jst/scripts/core/shell.js" />
+    <list default="true" readonly="true" id="0f76144d-ba4b-447b-905e-4051782f9456" name="Default" comment="Make it a real shell by removing the textfield and using the textarea so it's solid.  Also updated">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/jst/shell/Shell.java" afterPath="$PROJECT_DIR$/src/jst/shell/Shell.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/jst/NativeListAdapter.java" afterPath="$PROJECT_DIR$/src/jst/NativeListAdapter.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Release-Notes.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/resources/test/list.jst" afterPath="$PROJECT_DIR$/web/resources/test/list.jst" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/stripes-test/stripes-test.iml" afterPath="$PROJECT_DIR$/stripes-test/stripes-test.iml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/jst/EnhancedWrapFactory.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/jst/shell/ShellWindow.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/jst/shell/shell.wtkx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/serversidejs.ipr" afterPath="$PROJECT_DIR$/serversidejs.ipr" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/log4j.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build.xml" afterPath="$PROJECT_DIR$/build.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/jst/scripts/core/template.js" afterPath="$PROJECT_DIR$/src/jst/scripts/core/template.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/jst/scripts/core/jst.js" afterPath="$PROJECT_DIR$/src/jst/scripts/core/jst.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/resources/test/layout.jst" afterPath="$PROJECT_DIR$/web/resources/test/layout.jst" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/serversidejs.ipr" afterPath="$PROJECT_DIR$/serversidejs.ipr" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/jst/scripts/core/html.js" afterPath="$PROJECT_DIR$/src/jst/scripts/core/html.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/resources/test/timeOfDay.jst" afterPath="$PROJECT_DIR$/web/resources/test/timeOfDay.jst" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/serversidejs.iws" afterPath="$PROJECT_DIR$/serversidejs.iws" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/jst/shell/PivotShell.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/jst/NativeMapAdapter.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/jst/ScriptRuntime.java" afterPath="$PROJECT_DIR$/src/jst/ScriptRuntime.java" />
     </list>
     <ignored path="$USER_HOME_GRIFFON$/" />
     <ignored path="$USER_HOME_GRAILS$/" />
@@ -174,10 +173,10 @@
   <component name="FileColors" enabled="true" enabledForTabs="true" />
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="html.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/jst/scripts/core/html.js">
+      <file leaf-file-name="template.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/jst/scripts/core/template.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="109" column="73" selection-start="3217" selection-end="3217" vertical-scroll-proportion="0.0">
+            <state line="69" column="17" selection-start="2658" selection-end="2658" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -186,52 +185,81 @@
       <file leaf-file-name="Shell.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/jst/shell/Shell.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="137" column="14" selection-start="5435" selection-end="5435" vertical-scroll-proportion="0.0">
+            <state line="130" column="0" selection-start="5238" selection-end="5238" vertical-scroll-proportion="0.0">
+              <folding>
+                <marker date="1281804396000" expanded="true" signature="1734:2060" placeholder="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="build.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/build.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="45" column="0" selection-start="1509" selection-end="1509" vertical-scroll-proportion="-11.8">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="template.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/jst/scripts/core/template.js">
+      <file leaf-file-name="Release-Notes.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Release-Notes.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="7" column="14" selection-start="219" selection-end="219" vertical-scroll-proportion="0.0">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="EnhancedWrapFactory.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/jst/EnhancedWrapFactory.java">
+      <file leaf-file-name="log4j.properties" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/log4j.properties">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="31" column="38" selection-start="1042" selection-end="1042" vertical-scroll-proportion="0.0">
+            <state line="3" column="0" selection-start="154" selection-end="154" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ScriptableNativeJavaObject.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/jst/ScriptableNativeJavaObject.java">
+      <file leaf-file-name="layout.jst" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/web/resources/test/layout.jst">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="19" column="0" selection-start="611" selection-end="611" vertical-scroll-proportion="0.0">
+            <state line="43" column="0" selection-start="1044" selection-end="1044" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="NativeMapAdapter.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/jst/NativeMapAdapter.java">
+      <file leaf-file-name="invitation.jst" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/web/resources/test/invitation.jst">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="15" column="0" selection-start="490" selection-end="490" vertical-scroll-proportion="0.0">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="NativeListAdapter.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/jst/NativeListAdapter.java">
+      <file leaf-file-name="ServerSideTemplate.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/jst/ServerSideTemplate.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="26" column="0" selection-start="772" selection-end="772" vertical-scroll-proportion="0.44036698">
+            <state line="26" column="0" selection-start="823" selection-end="823" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="timeOfDay.jst" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/web/resources/test/timeOfDay.jst">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="2" column="7" selection-start="27" selection-end="27" vertical-scroll-proportion="0.048387095">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="list.jst" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/web/resources/test/list.jst">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="2" column="0" selection-start="26" selection-end="26" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -251,22 +279,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/jst/ResourceTemplateLoader.java" />
-        <option value="$PROJECT_DIR$/src/jst/shell/Shell.java" />
-        <option value="$PROJECT_DIR$/src/jst/ServerSideTemplate.java" />
-        <option value="$PROJECT_DIR$/docs/jst.html" />
-        <option value="$PROJECT_DIR$/src/jst/shell/shell.wtkx" />
-        <option value="$PROJECT_DIR$/src/jst/shell/PivotShell.java" />
-        <option value="$PROJECT_DIR$/src/jst/shell/ShellWindow.java" />
-        <option value="$PROJECT_DIR$/src/jst/ScriptRuntime.java" />
-        <option value="$PROJECT_DIR$/src/jst/scripts/core/shell.js" />
-        <option value="$PROJECT_DIR$/src/jst/scripts/jquery/slider.jst" />
-        <option value="$PROJECT_DIR$/src/jst/ScriptableNativeJavaObject.java" />
-        <option value="$PROJECT_DIR$/src/jst/scripts/core/template.js" />
-        <option value="$PROJECT_DIR$/src/jst/scripts/core/html.js" />
         <option value="$PROJECT_DIR$/src/jst/EnhancedWrapFactory.java" />
         <option value="$PROJECT_DIR$/src/jst/NativeMapAdapter.java" />
+        <option value="$PROJECT_DIR$/src/jst/ScriptableNativeJavaObject.java" />
+        <option value="$PROJECT_DIR$/src/jst/ScriptRuntime.java" />
+        <option value="$PROJECT_DIR$/src/jst/scripts/core/shell.js" />
+        <option value="$PROJECT_DIR$/src/jst/scripts/core/html.js" />
+        <option value="$PROJECT_DIR$/src/jst/scripts/core/jst.js" />
+        <option value="$PROJECT_DIR$/web/resources/test/layout.jst" />
+        <option value="$PROJECT_DIR$/web/resources/test/timeOfDay.jst" />
+        <option value="$PROJECT_DIR$/web/resources/test/list.jst" />
         <option value="$PROJECT_DIR$/src/jst/NativeListAdapter.java" />
+        <option value="$PROJECT_DIR$/src/log4j.properties" />
+        <option value="$PROJECT_DIR$/src/jst/scripts/core/template.js" />
+        <option value="$PROJECT_DIR$/src/jst/shell/Shell.java" />
+        <option value="$PROJECT_DIR$/build.xml" />
+        <option value="$PROJECT_DIR$/Release-Notes.html" />
       </list>
     </option>
   </component>
@@ -460,6 +488,18 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Favorites">
+        <subPane subId="serversidejs">
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" />
+              <option name="myItemType" value="com.intellij.ide.favoritesTreeView.FavoritesTreeNodeDescriptor" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -488,73 +528,12 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="web" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="WEB-INF" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="serversidejs" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="web" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="resources" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="test" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="serversidejs" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="test" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="serversidejs" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="jst" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
-      <pane id="Favorites" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -946,7 +925,7 @@
     <option name="USER" value="" />
     <option name="PASSWORD" value="" />
     <option name="LAST_MERGED_REVISION" />
-    <option name="UPDATE_RUN_STATUS" value="false" />
+    <option name="UPDATE_RUN_STATUS" value="true" />
     <option name="MERGE_DRY_RUN" value="false" />
     <option name="MERGE_DIFF_USE_ANCESTRY" value="true" />
     <option name="UPDATE_LOCK_ON_DEMAND" value="false" />
@@ -1006,26 +985,26 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="9" y="23" width="1408" height="848" extended-state="0" />
+    <frame x="17" y="22" width="1393" height="874" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3275862" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32692307" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.16703458" sideWeight="0.66313" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.35676393" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.16666667" sideWeight="0.69871795" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.35641026" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="TeamCity" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32941177" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32969433" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.29310346" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32948717" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2923077" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3995633" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.23325975" sideWeight="0.66313" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.23288691" sideWeight="0.69871795" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.34217507" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.34102565" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="SVN Repositories" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3294423" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Maven projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -1063,7 +1042,7 @@
     <option name="ENABLE_BACKGROUND_PROCESSES" value="false" />
     <option name="CHANGED_ON_SERVER_INTERVAL" value="60" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix autogen in execute() code.  Fix up the docs too." />
+    <option name="LAST_COMMIT_MESSAGE" value="Update version 1.2" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -1098,6 +1077,7 @@
     <MESSAGE value="Clean up imports" />
     <MESSAGE value="Big refactoring to simplify the design, and allow for parameter definition of the templates so the user can handle parameters not being specified or optional." />
     <MESSAGE value="Fix autogen in execute() code.  Fix up the docs too." />
+    <MESSAGE value="Update version 1.2" />
   </component>
   <component name="VssConfiguration">
     <option name="CLIENT_PATH" value="" />
@@ -1140,6 +1120,34 @@
           <url>file://$PROJECT_DIR$/../../TMobile/techtalks/testproject/src/HelloWorld.mxml</url>
           <line>13</line>
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="flex">
+          <url>file://$PROJECT_DIR$/../../TMobile/quickview/branches/BR_2.3/QuikView/src/main/flex/com/tmobile/quikview/search/view/SearchPageWrapper.as</url>
+          <line>283</line>
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="flex">
+          <url>file://$PROJECT_DIR$/../../TMobile/quickview/branches/BR_2.3/QuikView/src/main/flex/com/tmobile/quikview/search/view/SearchPageWrapper.as</url>
+          <line>284</line>
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="flex">
+          <url>file://$PROJECT_DIR$/../../TMobile/quickview/branches/BR_2.3/QuikView/src/main/flex/com/tmobile/quikview/main/DesktopConfigurationManager.as</url>
+          <line>153</line>
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="flex">
+          <url>file://$PROJECT_DIR$/../../TMobile/quickview/branches/BR_2.3/QuikView/src/main/flex/com/tmobile/quikview/login/controller/LoginController.as</url>
+          <line>373</line>
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="flex">
+          <url>file://$PROJECT_DIR$/../../TMobile/quickview/branches/BR_2.3/QuikView/src/main/flex/com/tmobile/quikview/login/controller/LoginController.as</url>
+          <line>321</line>
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="flex">
+          <url>file://$PROJECT_DIR$/../../TMobile/quickview/branches/BR_2.3/QuikView/src/main/flex/com/tmobile/quikview/search/command/VerifyDealerCommand.as</url>
+          <line>76</line>
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="flex">
+          <url>file://$PROJECT_DIR$/../../TMobile/quickview/branches/BR_2.3/QuikView/src/main/flex/com/tmobile/quikview/search/command/VerifyDealerCommand.as</url>
+          <line>90</line>
+        </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/../../fuseanalytics/salarysurvey/web/javascript/survey.js</url>
           <line>36</line>
@@ -1170,113 +1178,116 @@
     <option name="myLastEditedConfigurable" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/build.xml">
+    <entry file="file://$PROJECT_DIR$/src/jst/test/EmbedTemplateTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="56" column="25" selection-start="1940" selection-end="1940" vertical-scroll-proportion="-17.45" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/jst/scripts/core/jst.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="128" column="28" selection-start="3982" selection-end="3982" vertical-scroll-proportion="0.94074076" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/resources/test/layout.jst">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.68" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/jst/scripts/core/shell.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="94" selection-start="3" selection-end="3" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/jst/shell/Shell.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="137" column="14" selection-start="5435" selection-end="5435" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/jst/scripts/core/template.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="14" selection-start="219" selection-end="219" vertical-scroll-proportion="0.0">
+        <state line="9" column="13" selection-start="168" selection-end="168" vertical-scroll-proportion="0.10762332">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/jst/StringUtil.java">
+    <entry file="file://$PROJECT_DIR$/web/resources/test/index.jst">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="13" selection-start="195" selection-end="195" vertical-scroll-proportion="0.108597286">
+        <state line="6" column="38" selection-start="81" selection-end="81" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/jst/ServerSideTemplate.java">
+    <entry file="jar://$PROJECT_DIR$/lib/js.jar!/org/mozilla/javascript/Context.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="177" column="40" selection-start="6883" selection-end="6883" vertical-scroll-proportion="-1.8246446">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/jst/ScriptRuntime.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="121" column="43" selection-start="4347" selection-end="4347" vertical-scroll-proportion="3.138528">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/WEB-INF/web.xml">
-      <provider editor-type-id="com.intellij.javaee.module.view.web.viewlets.WebModuleGeneralEditorProvider">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.1632653">
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="com.intellij.javaee.module.view.web.viewlets.WebModuleAssemblyDescriptorProvider">
-        <state />
-      </provider>
-      <provider editor-type-id="com.intellij.javaee.module.view.web.viewlets.WebModuleAssemblyDescriptorReferencesProvider">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/jst/scripts/core/html.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="109" column="73" selection-start="3217" selection-end="3217" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/lib/js.jar!/org/mozilla/javascript/NativeJavaObject.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="20" selection-start="167" selection-end="167" vertical-scroll-proportion="-0.7076923">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/jst/ScriptableNativeJavaObject.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="0" selection-start="611" selection-end="611" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/jst/EnhancedWrapFactory.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="31" column="38" selection-start="1042" selection-end="1042" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/jst/NativeMapAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="0" selection-start="490" selection-end="490" vertical-scroll-proportion="0.0">
+        <state line="185" column="34" selection-start="9469" selection-end="9682" vertical-scroll-proportion="0.33169532">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/jst/NativeListAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="0" selection-start="772" selection-end="772" vertical-scroll-proportion="0.44036698">
+        <state line="18" column="0" selection-start="533" selection-end="533" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/jst/scripts/core/shell.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/resources/test/invitation.jst">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/resources/test/list.jst">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2" column="0" selection-start="26" selection-end="26" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/jst/test/TestJavaScriptFilterServlet.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="34" column="27" selection-start="1505" selection-end="1505" vertical-scroll-proportion="0.5936795">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/resources/test/layout.jst">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="43" column="0" selection-start="1044" selection-end="1044" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/log4j.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="3" column="0" selection-start="154" selection-end="154" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="45" column="0" selection-start="1509" selection-end="1509" vertical-scroll-proportion="-11.8">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Release-Notes.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/jst/shell/Shell.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="130" column="0" selection-start="5238" selection-end="5238" vertical-scroll-proportion="0.0">
+          <folding>
+            <marker date="1281804396000" expanded="true" signature="1734:2060" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/jst/scripts/core/template.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="69" column="17" selection-start="2658" selection-end="2658" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/jst/ServerSideTemplate.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="26" column="0" selection-start="823" selection-end="823" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/resources/test/timeOfDay.jst">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2" column="7" selection-start="27" selection-end="27" vertical-scroll-proportion="0.048387095">
           <folding />
         </state>
       </provider>

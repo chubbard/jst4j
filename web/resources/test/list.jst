@@ -1,20 +1,10 @@
 <@ list, template @>
 <ul>
-<% if ( list.length ) { -%>
-    <% for( var i = 0; i < list.length; i++ ) { -%>
-        <% if( template ) { -%>
-            <li><%= template.format( list[i] ) %></li>
-        <% } else { %>
-            <li><%= list[i].toString() %></li>
-        <% } -%>
+<% for( var i = 0; i < list.length; i++ ) { -%>
+    <% if( template ) { -%>
+        <li><%= template.format( list[i] ) %></li>
+    <% } else { %>
+        <li><%= list[i].toString() %></li>
     <% } -%>
-<% } else { -%>
-    <% for( var i = 0; i < list.size(); i++ ) { -%>
-        <% if( template ) { -%>
-            <li><%= template.format( list.get(i) ) %></li>
-        <% } else { %>
-            <li><%= list.get(i).toString() %></li>
-        <% } -%>
-    <% } %>
-<% } %>
+<% } -%>
 </ul>

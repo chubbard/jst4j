@@ -12,18 +12,7 @@
     </buildFile>
   </component>
   <component name="ArtifactManager">
-    <artifact type="exploded-war" name="stripes-test:stripes-test exploded">
-      <output-path>$PROJECT_DIR$/jetty-6.1.5/webapps/stripes-test</output-path>
-      <root id="root">
-        <element id="javaee-facet-resources" facet="stripes-test/web/stripes-test" />
-        <element id="directory" name="WEB-INF">
-          <element id="directory" name="classes">
-            <element id="module-output" name="stripes-test" />
-          </element>
-        </element>
-      </root>
-    </artifact>
-    <artifact type="exploded-war" name="jst4j:jst4j exploded">
+    <artifact type="exploded-war" build-on-make="true" name="jst4j:jst4j exploded">
       <output-path>$PROJECT_DIR$/jetty-6.1.5/webapps/root</output-path>
       <root id="root">
         <element id="javaee-facet-resources" facet="jst4j/web/jst4j" />
@@ -37,6 +26,17 @@
             <element id="library" level="project" name="commons-lang-2.3" />
             <element id="library" level="project" name="javamail" />
             <element id="library" level="project" name="log4j-1.2.14" />
+          </element>
+        </element>
+      </root>
+    </artifact>
+    <artifact type="exploded-war" build-on-make="true" name="stripes-test:stripes-test exploded">
+      <output-path>$PROJECT_DIR$/jetty-6.1.5/webapps/stripes-test</output-path>
+      <root id="root">
+        <element id="javaee-facet-resources" facet="stripes-test/web/stripes-test" />
+        <element id="directory" name="WEB-INF">
+          <element id="directory" name="classes">
+            <element id="module-output" name="stripes-test" />
           </element>
         </element>
       </root>
@@ -301,6 +301,37 @@
     </option>
   </component>
   <component name="SvnBranchConfigurationManager">
+    <option name="myConfigurationMap">
+      <map>
+        <entry key="$PROJECT_DIR$">
+          <value>
+            <SvnBranchConfiguration>
+              <option name="branchMap">
+                <map>
+                  <entry key="https://jst4j.googlecode.com/svn/branches">
+                    <value>
+                      <list />
+                    </value>
+                  </entry>
+                  <entry key="https://jst4j.googlecode.com/svn/tags">
+                    <value>
+                      <list />
+                    </value>
+                  </entry>
+                </map>
+              </option>
+              <option name="branchUrls">
+                <list>
+                  <option value="https://jst4j.googlecode.com/svn/branches" />
+                  <option value="https://jst4j.googlecode.com/svn/tags" />
+                </list>
+              </option>
+              <option name="trunkUrl" value="https://jst4j.googlecode.com/svn/trunk" />
+            </SvnBranchConfiguration>
+          </value>
+        </entry>
+      </map>
+    </option>
     <option name="myVersion" value="123" />
     <option name="mySupportsUserInfoFilter" value="true" />
   </component>
