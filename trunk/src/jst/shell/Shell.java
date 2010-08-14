@@ -27,11 +27,11 @@ import javax.swing.*;
 public class Shell {
 
     JFrame frame;
-    JTextField commandField;
     JTextPane commandOutput;
     JScrollPane scrollPane;
     List<String> commandHistory = new ArrayList<String>();
     int currentCommand = 0;
+    int lastCommandIndex = 0;
 
     TemplateContext templateContext;
     ScriptRuntime runtime;
@@ -53,22 +53,24 @@ public class Shell {
     }
 
     public void start() {
-        commandField = new JTextField();
-        commandField.getInputMap( JComponent.WHEN_FOCUSED ).put( KeyStroke.getKeyStroke( KeyEvent.VK_ENTER, 0, false ), "evaluate" );
-        commandField.getInputMap( JComponent.WHEN_FOCUSED ).put( KeyStroke.getKeyStroke( KeyEvent.VK_UP, 0, false ), "previousCommand" );
-        commandField.getInputMap( JComponent.WHEN_FOCUSED ).put( KeyStroke.getKeyStroke( KeyEvent.VK_DOWN, 0, false ), "nextCommand" );
-        commandField.getActionMap().put("evaluate", new AbstractAction() {
+        commandOutput = new JTextPane();
+        commandOutput.setEditable(true);
+        commandOutput.getInputMap( JComponent.WHEN_FOCUSED ).put( KeyStroke.getKeyStroke( KeyEvent.VK_ENTER, 0, false ), "evaluate" );
+        commandOutput.getInputMap( JComponent.WHEN_FOCUSED ).put( KeyStroke.getKeyStroke( KeyEvent.VK_UP, 0, false ), "previousCommand" );
+        commandOutput.getInputMap( JComponent.WHEN_FOCUSED ).put( KeyStroke.getKeyStroke( KeyEvent.VK_DOWN, 0, false ), "nextCommand" );
+
+        commandOutput.getActionMap().put("evaluate", new AbstractAction() {
             public void actionPerformed(ActionEvent event) {
                 try {
-                    String command = commandField.getText();
+                    String command = getCommand();
+                    println();
                     if( command.length() > 0 ) {
                         commandHistory.add( command );
                         currentCommand = commandHistory.size();
-                        println(command);
                         scrollPane.getVerticalScrollBar().setValue( scrollPane.getVerticalScrollBar().getMaximum() );
                         Object value = eval( command );
                         String result = Context.toString(value);
-                        println(result);
+                        println(result, Color.BLUE);
                     }
                 } catch( EcmaError error ) {
                     printError( "On line: " + error.lineNumber() + ": " + error.getErrorMessage() );
@@ -79,37 +81,60 @@ public class Shell {
                 } catch (IOException e) {
                     printError( e.toString() );
                 } finally {
-                    print( "> " );
-                    commandField.setText("");
+                    printPrompt();
                 }
             }
         });
-        commandField.getActionMap().put("previousCommand", new AbstractAction() {
+        commandOutput.getActionMap().put("previousCommand", new AbstractAction() {
             public void actionPerformed(ActionEvent event) {
-                if( currentCommand > 0 ) {
-                    currentCommand--;
-                    commandField.setText( commandHistory.get( currentCommand ) );
-                    commandField.selectAll();
+                try {
+                    if( currentCommand > 0 ) {
+                        currentCommand--;
+                        replaceCurrentCommand();
+                    }
+                } catch( BadLocationException e ) {
+                    printError( e.toString() );
                 }
             }
         });
-        commandField.getActionMap().put("nextCommand", new AbstractAction() {
+        commandOutput.getActionMap().put("nextCommand", new AbstractAction() {
             public void actionPerformed(ActionEvent event) {
-                if( currentCommand < commandHistory.size() - 1 ) {
-                    currentCommand++;
-                    commandField.setText( commandHistory.get( currentCommand ) );
-                    commandField.selectAll();
+                try {
+                    if( currentCommand < commandHistory.size() - 1 ) {
+                        currentCommand++;
+                        replaceCurrentCommand();
+                    }
+                } catch( BadLocationException e ) {
+                    printError( e.toString() );
                 }
             }
         });
-        commandOutput = new JTextPane();
-        commandOutput.setEditable(false);
+        commandOutput.getActionMap().put("caret-backward", new AbstractAction() {
+            public void actionPerformed(ActionEvent actionEvent) {
+                if( commandOutput.getCaretPosition() > lastCommandIndex ) {
+                    Action action = commandOutput.getActionMap().getParent().get("caret-backward");
+                    action.actionPerformed( actionEvent );
+                }
+            }
+        });
+        commandOutput.getActionMap().put("delete-previous", new AbstractAction() {
+            public void actionPerformed(ActionEvent actionEvent) {
+                if( commandOutput.getCaretPosition() > lastCommandIndex ) {
+                    Action action = commandOutput.getActionMap().getParent().get("delete-previous");
+                    action.actionPerformed( actionEvent );
+                }
+            }
+        });
+        commandOutput.getActionMap().put("caret-begin-line", new AbstractAction() {
+            public void actionPerformed(ActionEvent actionEvent) {
+                commandOutput.setCaretPosition( lastCommandIndex );
+            }
+        });
         scrollPane = new JScrollPane( commandOutput );
 
         frame = new JFrame("Jst4J Shell");
         frame.setLayout( new BorderLayout( 5, 5 ) );
         frame.add( scrollPane, BorderLayout.CENTER );
-        frame.add( commandField, BorderLayout.SOUTH );
         frame.setSize( 800, 600 );
         frame.setVisible(true);
 
@@ -125,8 +150,19 @@ public class Shell {
             }
         }
 
-        print( "> " );
-        commandField.requestFocus();
+        printPrompt();
+        commandOutput.requestFocus();
+    }
+
+    private void replaceCurrentCommand() throws BadLocationException {
+        commandOutput.getDocument().remove( lastCommandIndex, commandOutput.getDocument().getLength() - lastCommandIndex );
+        commandOutput.getDocument().insertString( lastCommandIndex, commandHistory.get(currentCommand), null );
+    }
+
+    private void printPrompt() {
+        print("> ");
+        lastCommandIndex = commandOutput.getDocument().getLength();
+        commandOutput.setCaretPosition(lastCommandIndex);
     }
 
     public List<String> getPaths() {
@@ -152,6 +188,12 @@ public class Shell {
         print( "\n", attributes );
     }
 
+    public void println( String text, Color color ) {
+        MutableAttributeSet fmt = commandOutput.getInputAttributes();
+        StyleConstants.setForeground(fmt, color);
+        println( text, fmt );
+    }
+
     public void print( String text ) {
         print( text, null );
     }
@@ -169,10 +211,7 @@ public class Shell {
     }
 
     public void printError(String result) {
-        MutableAttributeSet error = commandOutput.getInputAttributes();
-        StyleConstants.setForeground(error, Color.RED);
-        print( result, error );
-        print( "\n", error );
+        println( result, Color.RED );
     }
 
     public static void main(final String[] args) {
@@ -187,5 +226,14 @@ public class Shell {
                 }
             }
         });
+    }
+
+    public String getCommand() {
+        try {
+            return commandOutput.getText( lastCommandIndex, commandOutput.getDocument().getLength() - lastCommandIndex );
+        } catch( BadLocationException ex ) {
+            printError( ex.toString() );
+            return "";
+        }
     }
 }
