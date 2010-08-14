@@ -26,7 +26,7 @@ Object.prototype.properties = function() {
 
 Object.prototype._propertiesGenerator = function() {
     for( var key in this ) {
-        if( !this.constructor.prototype[key] ) {
+        if( this.hasOwnProperty(key) ) {
             yield key;
         }
     }
