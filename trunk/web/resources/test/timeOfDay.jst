@@ -1,5 +1,7 @@
 <@ count, today @>
 
+<% this.scripts("foo.js"); %>
+
 <% this.collectContentFor("leftMenu", function() { %>
     <p>
         Watch me count:
@@ -21,7 +23,9 @@
         <% } -%>
         </ul>
     </p>
-
+    <p>
+    What?
+    </p>
 <% } ); -%>
 
 <% this.layout( 'layout.jst' ); -%>

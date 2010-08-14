@@ -73,6 +73,11 @@ public class NativeListAdapter extends NativeJavaObject {
         }
     }
 
+    @Override
+    public boolean hasInstance(Scriptable value) {
+        return true;
+    }
+
     public String toString() {
         return javaObject.toString();
     }
