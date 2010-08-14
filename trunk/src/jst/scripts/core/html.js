@@ -8,7 +8,7 @@ var Html = {
     tag : function( tagname, attrs, body ) {
         var t = [ "<", tagname ];
         for( var key in attrs ) {
-            if( attrs[key]  && !(attrs[key] instanceof Function) ) {
+            if( attrs.hasOwnProperty(key) ) {
                 t.push( ' ' );
                 t.push( key );
                 t.push( '="' );
