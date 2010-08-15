@@ -12,6 +12,8 @@ Template.prototype = {
         this.contentForLayout = this.__template.apply( this, Array.fromArguments(arguments) );
         if( this.__layout ) {
             logger.info("Rendering with layout.");
+            this.__layout.__scripts.merge( this.__scripts );
+            this.__layout.__styles.merge( this.__styles );
             return this.__layout.__template.call( this );
         } else {
             logger.info("Rendering without layout.");

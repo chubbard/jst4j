@@ -84,9 +84,9 @@ public class JavascriptFilter implements Filter {
             }
         }
 
-        runtime.addVariable( "request", request );
-        runtime.addVariable( "response", response );
-        runtime.addVariable( "servletContext", servletContext );
+        runtime.addGlobalVariable( "request", request );
+        runtime.addGlobalVariable( "response", response );
+        runtime.addGlobalVariable( "servletContext", servletContext );
 
         return runtime;
     }
