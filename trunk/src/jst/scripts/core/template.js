@@ -29,8 +29,10 @@ Template.prototype = {
                 for( var i = 0; i < content.length; i++ ) {
                     var current = content[i];
                     if( current instanceof Function ) {
+                        logger.info( "Calling collected function.");
                         output.push( current.call(this) );
                     } else {
+                        logger.info( "Calling collected value.");
                         output.push( current );
                     }
                 }
@@ -46,7 +48,10 @@ Template.prototype = {
         for each( var p in Iterator(formalParams) ) {
             actualParams.push( options[p] );
         }
-        return template.evaluate.apply( template, actualParams );
+        var result = template.evaluate.apply( template, actualParams );
+        this.__scripts.merge( template.__scripts );
+        this.__styles.merge( template.__styles );
+        return result;
     },
     getFormalParameters: function() {
       return this.__templateObject.getFormalParameters();  

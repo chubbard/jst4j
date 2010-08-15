@@ -28,7 +28,7 @@
         </javac>
     </target>
 
-    <target name="package">
+    <target name="package" depends="build">
         <mkdir dir="${release.dir}"/>
 
         <jar destfile="${release.dir}/jst4j-${version}.jar">
@@ -41,7 +41,7 @@
         </jar>
     </target>
 
-    <target name="release">
+    <target name="release" depends="package">
         <zip file="${release.dir}/jst4j-${version}.zip">
             <fileset dir="${basedir}" includes="Release-Notes.html"/>
             <fileset dir="${release.dir}" includes="*.jar"/>
