@@ -23,7 +23,7 @@
 
     <target name="build" depends="clean">
         <mkdir dir="${build.dir}"/>
-        <javac destdir="${build.dir}" srcdir="${src.dir}" debug="yes" >
+        <javac destdir="${build.dir}" srcdir="${src.dir}" debug="yes">
             <classpath refid="libraries"/>
         </javac>
     </target>
