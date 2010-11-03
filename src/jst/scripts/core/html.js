@@ -22,6 +22,8 @@ var Html = {
                 t.push("\n");
                 t.push( body.join("\n") );
                 t.push("\n");
+            } else if( body instanceof Function ) {
+                t.push( body() );
             } else {
                 t.push( body );
             }
@@ -61,11 +63,11 @@ var Html = {
 };
 
 var Form = {
-    start : function( url, options ) {
+    form : function( url, options, callback ) {
         options = options || {};
         options.action = url;
         options.method = options.method || "post";
-        return Html.tag( "form", options, ' ' );
+        return Html.tag( "form", options, callback );
     },
     textfield : function( name, options ) {
         options = options || {};
@@ -119,7 +121,7 @@ var Form = {
         var opts = [];
         for( var index = 0; index < keys.length; index++ ) {
             var item = keys[index];
-            if( item instanceof Object ) {
+            if( item instanceof Object || item instanceof java.lang.Object ) {
                 var label = getProperty( item, lblField );
                 var value = getProperty( item, valField );
                 if( select != null && (select == value || select == index) ) {
@@ -150,9 +152,6 @@ var Form = {
         options.type = "password";
         options.name = name;
         return Html.tag( "input", options );
-    },
-    endForm : function() {
-        return "</form>";
     },
     fileUpload : function( name, options ) {
         options = options || {};
