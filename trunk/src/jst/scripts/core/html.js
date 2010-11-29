@@ -4,6 +4,11 @@ function getProperty( obj, property ) {
     return obj[property] instanceof Function ? obj[property]() : obj[property];
 }
 
+function app( url ) {
+    var ctx = servletContext.getContextPath();
+    return ctx.length > 0 ? ctx + url : url;
+}
+
 var Html = {
     tag : function( tagname, attrs, body ) {
         var t = [ "<", tagname ];
