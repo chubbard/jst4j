@@ -174,7 +174,7 @@ public class ServerSideTemplate {
             }
             script = cx.compileString( getGeneratedSource(), url, 1, null );
             return script;
-        } catch( EvaluatorException ex ) {
+        } catch( RhinoException ex ) {
             throw new TemplateException( this, ex );
         } finally {
             if( logger.isDebugEnabled() ) {
@@ -216,27 +216,31 @@ public class ServerSideTemplate {
 
     // todo consider moving this to the runtime since this is a generated method to kick off the intial template only.
     public Object execute(Scriptable scope, Context context, ServerSideTemplate layout, Map<String,String> callByName) throws IOException {
-        List<String> actualParameters = new ArrayList<String>( callByName.size() );
-        for( String formalParam : formalParameters) {
-            actualParameters.add( callByName.get( formalParam ) );
+        try {
+            List<String> actualParameters = new ArrayList<String>( callByName.size() );
+            for( String formalParam : formalParameters) {
+                actualParameters.add( callByName.get( formalParam ) );
+            }
+
+            include(context, scope);
+
+            String javaObj = "__java__";
+            ScriptableObject.putProperty( scope, javaObj, Context.javaToJS( this, scope ) );
+
+            StringBuilder startScript = new StringBuilder();
+            startScript.append("var __jst__ = function() {\n");
+            startScript.append(MessageFormat.format("  var template = new Template({0},{1});\n", getName(), javaObj) );
+            if( layout != null ) {
+                layout.include(context, scope);
+                startScript.append(MessageFormat.format("  template.__layout = {0};\n", layout.getName() ) );
+            }
+            startScript.append(MessageFormat.format( "  return template.evaluate({0});\n", StringUtil.join(actualParameters, ",") ) );
+            startScript.append("};\n");
+            startScript.append("__jst__()");
+            return context.evaluateString( scope, startScript.toString(), "jst_evaluate", 1, null );
+        } catch( RhinoException e ) {
+            throw new TemplateException( this, e );
         }
-
-        include(context, scope);
-
-        String javaObj = "__java__";
-        ScriptableObject.putProperty( scope, javaObj, Context.javaToJS( this, scope ) );
-
-        StringBuilder startScript = new StringBuilder();
-        startScript.append("var __jst__ = function() {\n");
-        startScript.append(MessageFormat.format("  var template = new Template({0},{1});\n", getName(), javaObj) );
-        if( layout != null ) {
-            layout.include(context, scope);
-            startScript.append(MessageFormat.format("  template.__layout = {0};\n", layout.getName() ) );
-        }
-        startScript.append(MessageFormat.format( "  return template.evaluate({0});\n", StringUtil.join(actualParameters, ",") ) );
-        startScript.append("};\n");
-        startScript.append("__jst__()");
-        return context.evaluateString( scope, startScript.toString(), "jst_evaluate", 1, null );
     }
 
     public void include(Context context, Scriptable scope) throws IOException {

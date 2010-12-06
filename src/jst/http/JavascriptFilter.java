@@ -1,6 +1,7 @@
 package jst.http;
 
 import jst.ScriptRuntime;
+import jst.TemplateException;
 import org.apache.log4j.Logger;
 
 import javax.servlet.*;
@@ -55,14 +56,27 @@ public class JavascriptFilter implements Filter {
     }
 
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        logger.debug("Forward to " + ((HttpServletRequest)servletRequest).getPathInfo() );
+        try {
+            logger.debug("Forward to " + ((HttpServletRequest)servletRequest).getPathInfo() );
 
-        String scriptName = servletRequest.getAttribute(TemplateDispatcher.JST_SCRIPT ).toString();
-        //String scriptName = ((HttpServletRequest)servletRequest).getRequestURI();
+            String scriptName = servletRequest.getAttribute(TemplateDispatcher.JST_SCRIPT ).toString();
+            //String scriptName = ((HttpServletRequest)servletRequest).getRequestURI();
 
-        ScriptRuntime runtime = initializeScript( scriptName, (HttpServletRequest)servletRequest, (HttpServletResponse)servletResponse );
-        
-        writeResponse( servletResponse, runtime.invoke() );
+            ScriptRuntime runtime = initializeScript( scriptName, (HttpServletRequest)servletRequest, (HttpServletResponse)servletResponse );
+
+            writeResponse( servletResponse, runtime.invoke() );
+        } catch( TemplateException ex ) {
+            writeScriptError( (HttpServletRequest)servletRequest, (HttpServletResponse)servletResponse, ex );
+        }
+    }
+
+    private void writeScriptError(HttpServletRequest request, HttpServletResponse response, TemplateException ex) throws IOException {
+        ScriptRuntime runtime = templateContext.load( "templates/exception.jst");
+        runtime.addGlobalVariable( "request", request );
+        runtime.addGlobalVariable( "response", response );
+        runtime.addGlobalVariable( "servletContext", servletContext );
+        runtime.addVariable("ex", ex );
+        writeResponse( response, runtime.invoke() );
     }
 
     private ScriptRuntime initializeScript(String scriptName, HttpServletRequest request, HttpServletResponse response) throws IOException {

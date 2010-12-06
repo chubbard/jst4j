@@ -29,8 +29,11 @@ public class TestJavaScriptFilterServlet extends HttpServlet {
         } else if( "include".equals(test) ) {
             new TemplateDispatcher( httpServletRequest, httpServletResponse )
                     .forward("include.jst");
+        } else if( "forms".equals(test) ) {
+            new TemplateDispatcher( httpServletRequest, httpServletResponse )
+                    .forward("forms.jst");
         } else {
-            List views = Arrays.asList( "layout", "invitation", "include" );
+            List views = Arrays.asList( "layout", "invitation", "include", "forms" );
             new TemplateDispatcher( httpServletRequest, httpServletResponse )
                     .exposeVariable( "views", views )
                     .forward("index.jst");
