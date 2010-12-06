@@ -34,7 +34,7 @@ public class JstView extends AbstractUrlBasedView {
 
             writeResponse(httpServletResponse, value);
         } catch( TemplateException ex ) {
-            ScriptRuntime runtime = templates.load( "templates/exception.jst ");
+            ScriptRuntime runtime = templates.load( "templates/exception.jst" );
 
             runtime.addGlobalVariable( "request", httpServletRequest);
             runtime.addGlobalVariable( "response", httpServletResponse );
