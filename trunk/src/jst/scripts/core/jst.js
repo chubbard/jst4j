@@ -71,6 +71,14 @@ String.prototype.html = function() {
 };
 
 /**
+ * Returns a URL encoded string of this string by encoding characters so they are safe
+ * to send in the path portion of a URL.
+ */
+String.prototype.encodeURI = function() {
+    return encodeURI( this );
+};
+
+/**
  * Returns a new function where this equals scope, and the rest of the arguments are passed in order to this function.
  *
  * @param scope the value of the this parameter within the Function the delegate method is called on.
@@ -119,7 +127,7 @@ Array.prototype.format = function( template ) {
     return this.map( function( item ) {
         return template.format( item );
     } );
-}
+};
 
 /**
  * Factory method that takes a Arguments object and converts it to an Array object.
@@ -130,6 +138,16 @@ Array.prototype.format = function( template ) {
  */
 Array.fromArguments = function( args ) {
     return Array.prototype.slice.call( args );
+};
+
+/**
+ * Gets a property from an object whether it be a Javascript or Java object.
+ *
+ * @param obj source to get this property on.
+ * @param property the name of the property on this object to retrieve
+ */
+function getProperty( obj, property ) {
+    return obj[property] instanceof Function ? obj[property]() : obj[property];
 }
 
 

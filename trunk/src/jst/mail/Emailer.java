@@ -10,6 +10,8 @@ import javax.activation.DataHandler;
 import java.util.*;
 import java.io.IOException;
 import java.io.File;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import jst.spring.JavascriptTemplateBean;
 
@@ -22,6 +24,7 @@ public class Emailer {
     private String password;
     private Properties mailProperties;
     private JavascriptTemplateBean jst;
+    private ExecutorService backgroundService = Executors.newCachedThreadPool();
 
     protected Emailer() {
     }
@@ -40,6 +43,10 @@ public class Emailer {
 
     public Email email(String to, String subject, String mailTemplate, String htmlTemplate) {
         return new Email(to, subject, mailTemplate, htmlTemplate);
+    }
+
+    public void stop() {
+        backgroundService.shutdown();
     }
 
     public class Email {
@@ -151,10 +158,14 @@ public class Emailer {
 
                 mimeMessage.saveChanges();
 
-                Transport transport = session.getTransport("smtp");
+                Transport transport = session.getTransport();
+                if( logger.isDebugEnabled() ) logger.debug("Connecting to mail server...");
                 transport.connect(username, password);
+                if( logger.isDebugEnabled() ) logger.debug("Connection made with mail server.");
                 transport.sendMessage(mimeMessage, mimeMessage.getAllRecipients());
+                if( logger.isDebugEnabled() ) logger.debug("Message " + subject + " sent to " + to );
                 transport.close();
+                if( logger.isDebugEnabled() ) logger.debug("Transport closed.");
             } catch( Exception mex ) {
                 logger.error("There was an problem emailing: " + subject + " to: " + to, mex);
             }
@@ -163,6 +174,14 @@ public class Emailer {
 
         public void send() {
             send( Session.getInstance(mailProperties), from );
+        }
+
+        public void sendAsync() {
+            backgroundService.submit( new Runnable() {
+                public void run() {
+                    send();
+                }
+            });
         }
 
         public void send(String from) {

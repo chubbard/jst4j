@@ -101,7 +101,7 @@ public class ScriptRuntime {
     }
 
     public ScriptRuntime addVariable(String varName, Object variable) {
-        String globalVariable = "__jstVariable" + variableMappings.size() + 1;
+        String globalVariable = "__jstVariable" + (variableMappings.size() + 1);
         if( logger.isDebugEnabled() ) {
             logger.debug( "Adding variable " + globalVariable + "=" + varName );
         }

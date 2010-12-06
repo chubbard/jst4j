@@ -1,7 +1,28 @@
 importPackage( Packages.jst );
 
-function getProperty( obj, property ) {
-    return obj[property] instanceof Function ? obj[property]() : obj[property];
+function url( path, params, options ) {
+    var result = [];
+
+    if( path.charAt(0) == "@" ) {
+        var ctx = servletContext.getContextPath();
+        result.push( ctx );
+        result.push( path.substring(1) );
+    }
+
+    if( params ) {
+        result.push("?");
+        var first = true;
+        for each( var key in params.properties() ) {
+            if( !first ) {
+                result.push( "&" );
+            }
+            result.push( key );
+            result.push( "=" );
+            result.push( value.encodeURI() );
+            first = false;
+        }
+    }
+    return result.join('');
 }
 
 function app( url ) {
@@ -12,14 +33,12 @@ function app( url ) {
 var Html = {
     tag : function( tagname, attrs, body ) {
         var t = [ "<", tagname ];
-        for( var key in attrs ) {
-            if( attrs.hasOwnProperty(key) ) {
-                t.push( ' ' );
-                t.push( key );
-                t.push( '="' );
-                t.push( attrs[key] );
-                t.push( '"');
-            }
+        for each( var key in attrs.properties() ) {
+            t.push( ' ' );
+            t.push( key );
+            t.push( '="' );
+            t.push( attrs[key] );
+            t.push( '"');
         }
         if( body ) {
             t.push(">");
