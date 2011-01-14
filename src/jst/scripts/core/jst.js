@@ -55,22 +55,6 @@ String.prototype.format = function() {
 };
 
 /**
- * Returns the XML escaped version of this string by encoding invalid characters
- * with XML safe characters.
- */
-String.prototype.xml = function() {
-    return StringUtil.escapeXml( this );
-};
-
-/**
- * Returns the HTML escaped version of this string by encoding invalid characters
- * with HTML safe characters.
- */
-String.prototype.html = function() {
-    return StringUtil.sanitize( StringUtil.escapeHtml( this ) );
-};
-
-/**
  * Returns a URL encoded string of this string by encoding characters so they are safe
  * to send in the path portion of a URL.
  */

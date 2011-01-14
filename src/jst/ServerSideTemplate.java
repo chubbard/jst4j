@@ -13,7 +13,7 @@ import java.util.regex.Matcher;
 import java.text.MessageFormat;
 
 public class ServerSideTemplate {
-    private static final Pattern jsDelimeters = Pattern.compile("<[%@]={0,2}(.+?)-?[@%]>", Pattern.MULTILINE );
+    private static final Pattern jsDelimeters = Pattern.compile("<[%@]={0,2}(.+?)-?[@%]>", Pattern.DOTALL );
     private static final Logger logger = Logger.getLogger( ServerSideTemplate.class );
 
     private String name;

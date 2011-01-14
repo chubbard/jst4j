@@ -43,7 +43,7 @@ public class TemplateContext {
             jst.exec( context, parent );
             logger.debug("Loading template boot script...");
             defaultScript = loadScript( context, "core/template.js" );
-             return this;
+            return this;
         } finally {
             Context.exit();
         }
@@ -117,6 +117,7 @@ public class TemplateContext {
     }
 
     public void include(String url) throws IOException {
+        // this is only accessible from JavascriptFilter, not from javascript.
         Context context = Context.enter();
         try {
             Script script = loadScript( context, url );
@@ -126,11 +127,11 @@ public class TemplateContext {
         }
     }
 
-    public Object eval(String input) {
-        Context context = Context.getCurrentContext();
-        if( context == null ) {
-            context = Context.enter();
-        }
-        return context.evaluateString( getParent(), input, "cmdline", 1, null );
+    public boolean isProduction() {
+        return production;
+    }
+
+    public void setProduction(boolean production) {
+        this.production = production;
     }
 }
