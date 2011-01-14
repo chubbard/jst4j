@@ -19,7 +19,6 @@ public class JavascriptFilter implements Filter {
 
     ServletContext servletContext;
     TemplateContext templateContext;
-    boolean isProduction = false;
 
     public JavascriptFilter() {
     }
@@ -28,13 +27,17 @@ public class JavascriptFilter implements Filter {
         try {
             logger.info("Initializing serverside javascript templates...");
             String sanitizer = filterConfig.getInitParameter("sanitizer");
+            String prod = filterConfig.getInitParameter("production");
+            String scriptLocation = filterConfig.getInitParameter("scriptLocation");
 
             servletContext = filterConfig.getServletContext();
 
             templateContext = new TemplateContext();
             templateContext.setSanitizingFunction( sanitizer != null ? sanitizer : "Html.html");
-            String scriptLocation = filterConfig.getInitParameter("scriptLocation");
             templateContext.addLoader( new ServletTemplateLoader( filterConfig.getServletContext(), scriptLocation ) );
+            if( prod != null ) {
+                templateContext.setProduction( Boolean.parseBoolean(prod) );
+            }
             
             templateContext.include("core/html.js");
 
