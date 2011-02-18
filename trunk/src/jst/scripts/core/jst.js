@@ -8,9 +8,9 @@
  *
  * @returns this.
  */
-Object.prototype.merge = function( obj, overwrite ) {
-    for( var key in obj ) {
-        if( !obj.constructor.prototype[key] && (typeof this[key] == "undefined" || overwrite) ) {
+Object.prototype.merge = function(obj, overwrite) {
+    for (var key in obj) {
+        if (!obj.constructor.prototype[key] && (typeof this[key] == "undefined" || overwrite)) {
             this[key] = obj[key];
         }
     }
@@ -21,12 +21,12 @@ Object.prototype.merge = function( obj, overwrite ) {
  * Returns an iterator over the properties on this object.
  */
 Object.prototype.properties = function() {
-    return Iterator( this._propertiesGenerator() );
+    return Iterator(this._propertiesGenerator());
 };
 
 Object.prototype._propertiesGenerator = function() {
-    for( var key in this ) {
-        if( this.hasOwnProperty(key) ) {
+    for (var key in this) {
+        if (this.hasOwnProperty(key)) {
             yield key;
         }
     }
@@ -43,15 +43,31 @@ String.prototype.format = function() {
     var result = "";
     var match = null;
     do {
-        match = expr.exec( this );
-        if( match ) {
-            result += this.substring( index, match.index ) + arguments[ match[1] ];
+        match = expr.exec(this);
+        if (match) {
+            result += this.substring(index, match.index) + arguments[ match[1] ];
             index = match.index + match[0].length;
         } else {
-            result += this.substring( index );
+            result += this.substring(index);
         }
-    } while( match );
+    } while (match);
     return result;
+};
+
+/**
+ * Returns the XML escaped version of this string by encoding invalid characters
+ * with XML safe characters.
+ */
+String.prototype.xml = function() {
+    return StringUtil.escapeXml(this);
+};
+
+/**
+ * Returns the HTML escaped version of this string by encoding invalid characters
+ * with HTML safe characters.
+ */
+String.prototype.html = function() {
+    return StringUtil.sanitize(StringUtil.escapeHtml(this));
 };
 
 /**
@@ -59,7 +75,7 @@ String.prototype.format = function() {
  * to send in the path portion of a URL.
  */
 String.prototype.encodeURI = function() {
-    return encodeURI( this );
+    return encodeURI(this);
 };
 
 /**
@@ -67,33 +83,33 @@ String.prototype.encodeURI = function() {
  *
  * @param scope the value of the this parameter within the Function the delegate method is called on.
  */
-Function.prototype.delegate = function( scope ) {
+Function.prototype.delegate = function(scope) {
     var _method = this;
     var args = Array.fromArguments(arguments);
     var scope = args.shift();
     return function() {
-        _method.apply( scope, args );
+        _method.apply(scope, args);
     };
 };
 
 /**
- * Returns a new function where 
+ * Returns a new function where
  */
 Function.prototype.curry = function() {
     if (!arguments.length) return this;
     var _method = this;
     var args = Array.fromArguments(arguments);
     return function() {
-      return _method.apply(this, args.concat( Array.fromArguments(arguments) ) );
+        return _method.apply(this, args.concat(Array.fromArguments(arguments)));
     };
 };
 
 
-if( !Array.prototype.reduce ) {
-    Array.prototype.reduce = function( reducer, initial ) {
+if (!Array.prototype.reduce) {
+    Array.prototype.reduce = function(reducer, initial) {
         var reduction = initial;
-        for( var i = 0; i < this.length; i++ ) {
-            reduction = reducer.call( this, reduction, this[i], i, this );
+        for (var i = 0; i < this.length; i++) {
+            reduction = reducer.call(this, reduction, this[i], i, this);
         }
         return reduction;
     };
@@ -107,10 +123,10 @@ if( !Array.prototype.reduce ) {
  *
  * @returns the string created by applying template + this array.
  */
-Array.prototype.format = function( template ) {
-    return this.map( function( item ) {
-        return template.format( item );
-    } );
+Array.prototype.format = function(template) {
+    return this.map(function(item) {
+        return template.format(item);
+    });
 };
 
 /**
@@ -120,8 +136,8 @@ Array.prototype.format = function( template ) {
  *
  * @returns An Array consisting of the members of the given Arguments.
  */
-Array.fromArguments = function( args ) {
-    return Array.prototype.slice.call( args );
+Array.fromArguments = function(args) {
+    return Array.prototype.slice.call(args);
 };
 
 /**
@@ -130,8 +146,27 @@ Array.fromArguments = function( args ) {
  * @param obj source to get this property on.
  * @param property the name of the property on this object to retrieve
  */
-function getProperty( obj, property ) {
+function getProperty(obj, property) {
     return obj[property] instanceof Function ? obj[property]() : obj[property];
 }
 
+/**
+ * Returns a String formatted according to the given pattern.  The pattern follows
+ * the syntax of java.text.SimpleDateFormat.
+ *
+ * @param pattern Format of returned date string.  Must conform to java.text.SimpleDateFormat syntax.
+ */
+Date.prototype.format = function( pattern ) {
+    var f = new java.text.SimpleDateFormat( pattern );
+    return f.format( this );
+};
 
+/**
+ * Returns a String formatted according to the given pattern.  The pattern follows
+ * the syntax of java.util.Formatter.
+ *
+ * @param pattern Format of the returned string.  Must conform to java.util.Formatter syntax.
+ */
+Number.format = function( pattern ) {
+    return java.lang.String.format.apply( this, arguments );
+};
