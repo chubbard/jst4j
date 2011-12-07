@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 public class TestJavaScriptFilterServlet extends HttpServlet {
 
@@ -19,7 +20,7 @@ public class TestJavaScriptFilterServlet extends HttpServlet {
         if( "layout".equals(test) ) {
             new TemplateDispatcher( httpServletRequest, httpServletResponse )
                     .exposeVariable( "today", new Date() )
-                    .exposeVariable( "count", 69 )
+                    .exposeVariable( "count", new Random().nextInt(100) )
                     .mixin( "servlet", this )
                     .layout( "layout.jst" )
                     .forward("timeOfDay.jst");

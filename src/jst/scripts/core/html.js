@@ -13,12 +13,13 @@ function url( path, params, options ) {
         result.push("?");
         var first = true;
         for each( var key in params.properties() ) {
+            var value = params[key];
             if( !first ) {
                 result.push( "&" );
             }
             result.push( key );
             result.push( "=" );
-            result.push( value.encodeURI() );
+            result.push( value.encodeURI ? value.encodeURI() : value );
             first = false;
         }
     }
