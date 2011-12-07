@@ -25,7 +25,7 @@ public class JavascriptFilter implements Filter {
 
     public void init(FilterConfig filterConfig) throws ServletException {
         try {
-            logger.info("Initializing serverside javascript templates...");
+            long start = System.currentTimeMillis();
             String sanitizer = filterConfig.getInitParameter("sanitizer");
             String prod = filterConfig.getInitParameter("production");
             String scriptLocation = filterConfig.getInitParameter("scriptLocation");
@@ -53,6 +53,7 @@ public class JavascriptFilter implements Filter {
                     }
                 }
             }
+            logger.info("Initialized javascript serverside templates: " + (System.currentTimeMillis()-start) + "ms");
         } catch (IOException e) {
             throw new ServletException( "Failed to load the default script.", e );
         }

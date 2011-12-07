@@ -10,7 +10,6 @@
           <root url="file://$MODULE_DIR$/web/resources" relative="/" />
           <root url="file://$MODULE_DIR$/web/WEB-INF" relative="/WEB-INF" />
         </webroots>
-        <context-artifact name="jst4j:jst4j exploded" />
       </configuration>
     </facet>
   </component>
@@ -29,15 +28,6 @@
     <orderEntry type="library" name="Jetty" level="project" />
     <orderEntry type="library" name="Rhino" level="project" />
     <orderEntry type="library" name="spring" level="project" />
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$APPLICATION_HOME_DIR$/lib/javaee.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
     <orderEntry type="library" name="javamail" level="project" />
     <orderEntry type="library" name="pivot" level="project" />
   </component>

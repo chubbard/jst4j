@@ -28,6 +28,7 @@ public class ScriptRuntime {
     }
 
     public ScriptRuntime( ServerSideTemplate template, TemplateContext context ) {
+        logger.info("Initialize script runtime");
         this.template = template;
         this.context = context;
         this.jsContext = Context.enter();
@@ -53,11 +54,15 @@ public class ScriptRuntime {
     }
 
     public Object invoke() throws IOException {
+        long start = System.currentTimeMillis();
         try {
-            logger.debug( "Invoking script " + template.getName() );
+            logger.debug( "Invoking script " + template.getURL() );
             return template.execute( scope, jsContext, layout, variableMappings );
         } finally {
             Context.exit();
+            if( logger.isDebugEnabled() ) {
+                logger.debug( template.getName() + " rendered " + (System.currentTimeMillis() - start) + " ms");
+            }
         }
     }
 

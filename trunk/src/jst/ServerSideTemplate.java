@@ -19,12 +19,14 @@ public class ServerSideTemplate {
     private String name;
     private String url;
     private String generatedSource;
+    private String templateSource;
     private TemplateLoader sourceLoader;
     private Script script;
     private long compiledTimestamp;
     private boolean isDebug = true;
     private String sanitizingFunction = null;
     private List<String> formalParameters = new ArrayList<String>();
+    private TemplateLineNumbers lines;
 
     public ServerSideTemplate(String url, TemplateLoader scriptLoader, boolean isDebug ) throws FileNotFoundException {
         this.url = url;
@@ -33,22 +35,29 @@ public class ServerSideTemplate {
         this.isDebug = isDebug;
     }
 
-    private String createPageScript( CharSequence template ) {
+    private String createPageScript( StringBuffer template ) {
+        formalParameters.clear();
         StringBuilder currentBuffer = new StringBuilder();
+        lines = new TemplateLineNumbers( template );
         Matcher matcher = jsDelimeters.matcher( template );
         int start = 0;
         while( start != template.length() ) {
             if( matcher.find( start ) ) {
                 int plainTextEnd = matcher.start();
 
-                currentBuffer.append( createOutput( template.subSequence( start, plainTextEnd ) ) );
+                if( plainTextEnd - start > 0 ) {
+                    currentBuffer.append( createOutput( template.subSequence( start, plainTextEnd ) ) );
+                    lines.addScriptLine( start, plainTextEnd, true );
+                }
                 String expression = matcher.group();
                 String scriptletContent = matcher.group(1);
 
                 if( expression.startsWith("<%==") ) {
                     currentBuffer.append( createInlineExpression( scriptletContent, false ) );
+                    lines.addScriptLine( matcher.start(), matcher.end(), false );
                 } else if( expression.startsWith("<%=") ) {
-                    currentBuffer.append( createInlineExpression( scriptletContent, true ) );
+                    currentBuffer.append( createInlineExpression( scriptletContent, false ) );
+                    lines.addScriptLine( matcher.start(), matcher.end(), false );
                 } else if( expression.startsWith("<@") ) {
                     String[] vars = scriptletContent.split(",");
                     for( String variable : vars ) {
@@ -56,14 +65,15 @@ public class ServerSideTemplate {
                     }
                 } else {
                     addExpresion(currentBuffer, scriptletContent);
+                    lines.addScriptLine( matcher.start(), matcher.end(), false );
                 }
                 start = matcher.end();
                 if( expression.endsWith("-%>") ) {
                     start = eatRemainingWhitespace(start, template, currentBuffer);
                 }
-
             } else if( start < template.length() ) {
                 currentBuffer.append( createOutput( template.subSequence( start, template.length() ) ) );
+                lines.addScriptLine( start, template.length(), true );
                 start = template.length();
             } else {
                 start = template.length();
@@ -185,18 +195,20 @@ public class ServerSideTemplate {
 
     public String toString() {
         try {
-            return getGeneratedSource();
+            getGeneratedSource();
+            return templateSource;
         } catch( IOException e ) {
             throw (RuntimeException)new RuntimeException( e.getMessage() ).initCause( e );
         }
     }
 
     private String createTemplate() throws IOException {
-        formalParameters.clear();
         InputStream stream = sourceLoader.load( url );
         if( stream == null ) throw new IOException( url + " not found!" );
         StringBuffer template = readTemplate( stream );
-        return createPageScript( template);
+        templateSource = template.toString();
+        generatedSource = createPageScript( template);
+        return generatedSource;
     }
 
     public Script getScript() {
@@ -207,7 +219,11 @@ public class ServerSideTemplate {
         return name;
     }
 
-    public String getGeneratedSource() throws IOException {
+    public String getURL() {
+        return url;
+    }
+
+    public synchronized String getGeneratedSource() throws IOException {
         if( generatedSource == null || shouldRefresh() ) {
             generatedSource = createTemplate();
         }
@@ -216,13 +232,15 @@ public class ServerSideTemplate {
 
     // todo consider moving this to the runtime since this is a generated method to kick off the intial template only.
     public Object execute(Scriptable scope, Context context, ServerSideTemplate layout, Map<String,String> callByName) throws IOException {
+        long start = System.currentTimeMillis();
         try {
+            include(context, scope);
+
             List<String> actualParameters = new ArrayList<String>( callByName.size() );
+            logger.info("Formal Parameters: " + formalParameters.size() );
             for( String formalParam : formalParameters) {
                 actualParameters.add( callByName.get( formalParam ) );
             }
-
-            include(context, scope);
 
             String javaObj = "__java__";
             ScriptableObject.putProperty( scope, javaObj, Context.javaToJS( this, scope ) );
@@ -239,7 +257,13 @@ public class ServerSideTemplate {
             startScript.append("__jst__()");
             return context.evaluateString( scope, startScript.toString(), "jst_evaluate", 1, null );
         } catch( RhinoException e ) {
+            logger.error("Error while evaluating " + url, e );
             throw new TemplateException( this, e );
+        } finally {
+            if( logger.isInfoEnabled() ) {
+                long end = System.currentTimeMillis();
+                logger.info("Evaluating " + url + " took " + (end-start) + "ms");
+            }
         }
     }
 
@@ -264,10 +288,27 @@ public class ServerSideTemplate {
         return formalParameters;
     }
 
+    public int getTemplateLineFromScriptLine( int scriptLine ) {
+        IndexToLineNumber line = lines.getLine( scriptLine );
+        if( line != null ) return line.templateLineNumber;
+        return -1;
+    }
+
     public static void main( String[] args ) throws IOException {
         FileTemplateLoader loader = new FileTemplateLoader( new File( "web/resources/test" ) );
         ServerSideTemplate script = new ServerSideTemplate( "timeOfDay.jst", loader, true);
         System.out.println( script.toString() );
+
+        System.out.println("--------------------------------------");
+        String[] genSrc = script.getGeneratedSource().split("\n");
+        for( int i = 0; i < script.lines.sourceLines.length; i++ ) {
+            String line = script.lines.sourceLines[i];
+            System.out.printf( "%4d: %s%n", i+1, line );
+        }
+
+        for( int i = 0; i < script.lines.size(); i++ ) {
+            System.out.printf( "%4d: %s%n", script.getTemplateLineFromScriptLine(i+1), genSrc[ i ] );
+        }
 //        File layoutFile = new File( "web/resources/default.jst" );
 //        ServerSideTemplate layout = new ServerSideTemplate( "asset/list", layoutFile, true);
 //        System.out.println( layout.toString() );

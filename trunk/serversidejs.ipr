@@ -290,7 +290,10 @@
       <module fileurl="file://$PROJECT_DIR$/stripes-test/stripes-test.iml" filepath="$PROJECT_DIR$/stripes-test/stripes-test.iml" />
     </modules>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_5" assert-keyword="true" jdk-15="true" project-jdk-name="1.5" project-jdk-type="JavaSDK">
+  <component name="ProjectResources">
+    <default-html-doctype>http://www.w3.org/1999/xhtml</default-html-doctype>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_5" assert-keyword="true" jdk-15="true" project-jdk-name="1.6" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/classes" />
   </component>
   <component name="ResourceManagerContainer">
@@ -347,23 +350,17 @@
     </option>
   </component>
   <component name="libraryTable">
-    <library name="servlet-api-2.5-6.1.5">
-      <CLASSES>
-        <root url="jar://$PROJECT_DIR$/jetty-6.1.5/lib/servlet-api-2.5-6.1.5.jar!/" />
-      </CLASSES>
-      <JAVADOC />
-      <SOURCES />
-    </library>
-    <library name="log4j-1.2.14">
-      <CLASSES>
-        <root url="jar://$PROJECT_DIR$/lib/log4j-1.2.14.jar!/" />
-      </CLASSES>
-      <JAVADOC />
-      <SOURCES />
-    </library>
     <library name="commons-lang-2.3">
       <CLASSES>
         <root url="jar://$PROJECT_DIR$/lib/commons-lang-2.3.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
+    </library>
+    <library name="javamail">
+      <CLASSES>
+        <root url="jar://$PROJECT_DIR$/lib/mail.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/activation.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES />
@@ -390,46 +387,13 @@
       </CLASSES>
       <JAVADOC />
       <SOURCES>
-        <root url="file://$PROJECT_DIR$/../../../lib/jetty-6.1.5/modules/jetty/src/main/java" />
-        <root url="file://$PROJECT_DIR$/../../../lib/jetty-6.1.5/modules/util/src/main/java" />
+        <root url="file://$USER_HOME$/lib/jetty-6.1.5/modules/jetty/src/main/java" />
+        <root url="file://$USER_HOME$/lib/jetty-6.1.5/modules/util/src/main/java" />
       </SOURCES>
     </library>
-    <library name="Rhino">
+    <library name="log4j-1.2.14">
       <CLASSES>
-        <root url="jar://$PROJECT_DIR$/lib/js.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="file://$PROJECT_DIR$/../../../lib/rhino1_6R6/javadoc" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="file://$PROJECT_DIR$/../../../lib/rhino1_6R6/src" />
-      </SOURCES>
-    </library>
-    <library name="Stripes">
-      <CLASSES>
-        <root url="jar://$PROJECT_DIR$/stripes-test/web/WEB-INF/lib/commons-logging.jar!/" />
-        <root url="jar://$PROJECT_DIR$/stripes-test/web/WEB-INF/lib/cos.jar!/" />
-        <root url="jar://$PROJECT_DIR$/stripes-test/web/WEB-INF/lib/stripes.jar!/" />
-      </CLASSES>
-      <JAVADOC />
-      <SOURCES />
-    </library>
-    <library name="spring">
-      <CLASSES>
-        <root url="jar://$PROJECT_DIR$/lib/spring-context.jar!/" />
-        <root url="jar://$PROJECT_DIR$/lib/spring-web.jar!/" />
-        <root url="jar://$PROJECT_DIR$/lib/spring-core.jar!/" />
-        <root url="jar://$PROJECT_DIR$/lib/spring-webmvc.jar!/" />
-        <root url="jar://$PROJECT_DIR$/lib/spring-beans.jar!/" />
-        <root url="file://$PROJECT_DIR$/../../../lib/spring-framework-2.5.6.SEC01/src" />
-      </CLASSES>
-      <JAVADOC />
-      <SOURCES />
-    </library>
-    <library name="javamail">
-      <CLASSES>
-        <root url="jar://$PROJECT_DIR$/lib/mail.jar!/" />
-        <root url="jar://$PROJECT_DIR$/lib/activation.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/log4j-1.2.14.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES />
@@ -442,6 +406,45 @@
         <root url="jar://$PROJECT_DIR$/lib/pivot-tools-1.4.jar!/" />
         <root url="jar://$PROJECT_DIR$/lib/pivot-core-1.4.jar!/" />
         <root url="jar://$PROJECT_DIR$/lib/pivot-charts-1.4.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
+    </library>
+    <library name="Rhino">
+      <CLASSES>
+        <root url="jar://$PROJECT_DIR$/lib/js.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="file://$USER_HOME$/lib/rhino1_6R6/javadoc" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="file://$USER_HOME$/lib/rhino1_6R6/src" />
+      </SOURCES>
+    </library>
+    <library name="servlet-api-2.5-6.1.5">
+      <CLASSES>
+        <root url="jar://$PROJECT_DIR$/jetty-6.1.5/lib/servlet-api-2.5-6.1.5.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
+    </library>
+    <library name="spring">
+      <CLASSES>
+        <root url="jar://$PROJECT_DIR$/lib/spring-context.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/spring-web.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/spring-core.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/spring-webmvc.jar!/" />
+        <root url="jar://$PROJECT_DIR$/lib/spring-beans.jar!/" />
+        <root url="file://$USER_HOME$/lib/spring-framework-2.5.6.SEC01/src" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
+    </library>
+    <library name="Stripes">
+      <CLASSES>
+        <root url="jar://$PROJECT_DIR$/stripes-test/web/WEB-INF/lib/commons-logging.jar!/" />
+        <root url="jar://$PROJECT_DIR$/stripes-test/web/WEB-INF/lib/cos.jar!/" />
+        <root url="jar://$PROJECT_DIR$/stripes-test/web/WEB-INF/lib/stripes.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES />

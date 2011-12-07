@@ -11,12 +11,12 @@ Template.prototype = {
         this.__output = [];
         this.contentForLayout = this.__template.apply( this, Array.fromArguments(arguments) );
         if( this.__layout ) {
-            logger.info("Rendering with layout.");
+            logger.info( this.__templateObject.getURL() + " rendering with layout " + this.__layout.__templateObject.getURL() );
             this.__layout.__scripts = this.__scripts;
             this.__layout.__styles = this.__styles;
             return this.__layout.__template.call( this );
         } else {
-            logger.info("Rendering without layout.");
+            logger.info( this.__templateObject.getURL() + " rendering without a layout." );
             return this.contentForLayout;
         }
     },
