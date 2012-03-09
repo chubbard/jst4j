@@ -16,24 +16,24 @@ import java.util.Set;
 public class ScriptRuntime {
     private static final Logger logger = Logger.getLogger( ScriptRuntime.class );
 
-    private TemplateContext context;
+    private TemplateContextImpl context;
     private ServerSideTemplate template;
     private ServerSideTemplate layout;
     private Context jsContext;
     private Scriptable scope;
     private Map<String,String> variableMappings = new HashMap<String,String>();
 
-    public ScriptRuntime( TemplateContext context ) {
+    public ScriptRuntime( TemplateContextImpl context ) {
         this( null, context );
     }
 
-    public ScriptRuntime( ServerSideTemplate template, TemplateContext context ) {
+    public ScriptRuntime( ServerSideTemplate template, TemplateContextImpl context ) {
         logger.info("Initialize script runtime");
         this.template = template;
         this.context = context;
         this.jsContext = Context.enter();
         this.jsContext.setWrapFactory( new EnhancedWrapFactory() );
-        this.jsContext.setLanguageVersion(TemplateContext.JAVASCRIPT_VERSION);
+        this.jsContext.setLanguageVersion(TemplateContextImpl.JAVASCRIPT_VERSION);
 
         scope = jsContext.newObject( context.getParent() );
         scope.setPrototype( context.getParent() );

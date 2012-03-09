@@ -1,5 +1,6 @@
 package jst.mail;
 
+import jst.TemplateContext;
 import org.apache.log4j.Logger;
 
 import javax.mail.internet.*;
@@ -13,8 +14,6 @@ import java.io.File;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import jst.spring.JavascriptTemplateBean;
-
 public class Emailer {
 
     private static final Logger logger = Logger.getLogger(Emailer.class);
@@ -23,13 +22,13 @@ public class Emailer {
     private String username;
     private String password;
     private Properties mailProperties;
-    private JavascriptTemplateBean jst;
+    private TemplateContext jst;
     private ExecutorService backgroundService = Executors.newCachedThreadPool();
 
     protected Emailer() {
     }
 
-    public Emailer( JavascriptTemplateBean jst, Properties mailProperties, String from, String username, String password) throws IOException {
+    public Emailer( TemplateContext jst, Properties mailProperties, String from, String username, String password) throws IOException {
         this.jst = jst;
         this.mailProperties = mailProperties;
         this.from = from;
