@@ -1,6 +1,7 @@
 package jst.http;
 
 import jst.ScriptRuntime;
+import jst.TemplateContextImpl;
 import jst.TemplateException;
 import org.apache.log4j.Logger;
 
@@ -10,15 +11,12 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.util.Enumeration;
 
-import jst.TemplateContext;
-import jst.FileTemplateLoader;
-
 public class JavascriptFilter implements Filter {
 
     private static final Logger logger = Logger.getLogger( JavascriptFilter.class );
 
     ServletContext servletContext;
-    TemplateContext templateContext;
+    TemplateContextImpl templateContext;
 
     public JavascriptFilter() {
     }
@@ -28,31 +26,36 @@ public class JavascriptFilter implements Filter {
             long start = System.currentTimeMillis();
             String sanitizer = filterConfig.getInitParameter("sanitizer");
             String prod = filterConfig.getInitParameter("production");
-            String scriptLocation = filterConfig.getInitParameter("scriptLocation");
 
             servletContext = filterConfig.getServletContext();
 
-            templateContext = new TemplateContext();
-            templateContext.setSanitizingFunction( sanitizer != null ? sanitizer : "Html.html");
-            templateContext.addLoader( new ServletTemplateLoader( filterConfig.getServletContext(), scriptLocation ) );
+            templateContext = new TemplateContextImpl();
+            templateContext.setSanitizingFunction(sanitizer != null ? sanitizer : "Html.html");
             if( prod != null ) {
                 templateContext.setProduction( Boolean.parseBoolean(prod) );
             }
-            
-            templateContext.include("core/html.js");
 
-            String templatePaths = filterConfig.getInitParameter("template.paths");
+            String templatePaths = filterConfig.getInitParameter("script.paths");
             if( templatePaths != null ) {
                 String[] paths = templatePaths.split(",");
                 for( String path : paths ) {
-                    File filepath = new File( path );
-                    if( filepath.exists() ) {
-                        templateContext.addLoader( new FileTemplateLoader( filepath ) );
+                    ServletTemplateLoader loader = new ServletTemplateLoader( filterConfig.getServletContext(), path );
+                    if( loader.exists() ) {
+                        templateContext.addLoader( loader );
                     } else {
                         logger.warn( path + " does not exist!  Not being added to the loader list." );
                     }
                 }
             }
+
+            templateContext.include("core/html.js");
+            String scripts = filterConfig.getInitParameter("script.includes");
+            if( scripts != null ) {
+                for( String script : scripts.split(",") ) {
+                    templateContext.include( script );
+                }
+            }
+
             logger.info("Initialized javascript serverside templates: " + (System.currentTimeMillis()-start) + "ms");
         } catch (IOException e) {
             throw new ServletException( "Failed to load the default script.", e );
@@ -61,16 +64,20 @@ public class JavascriptFilter implements Filter {
 
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         try {
-            logger.debug("Forward to " + ((HttpServletRequest)servletRequest).getPathInfo() );
-
-            String scriptName = servletRequest.getAttribute(TemplateDispatcher.JST_SCRIPT ).toString();
-            //String scriptName = ((HttpServletRequest)servletRequest).getRequestURI();
-
+            String scriptName = getScriptName(servletRequest);
             ScriptRuntime runtime = initializeScript( scriptName, (HttpServletRequest)servletRequest, (HttpServletResponse)servletResponse );
-
             writeResponse( servletResponse, runtime.invoke() );
         } catch( TemplateException ex ) {
             writeScriptError( (HttpServletRequest)servletRequest, (HttpServletResponse)servletResponse, ex );
+        }
+    }
+
+    private String getScriptName(ServletRequest servletRequest) {
+        if( servletRequest.getAttribute(TemplateDispatcher.JST_SCRIPT) != null ) {
+            logger.debug("Filtering on " + ((HttpServletRequest)servletRequest).getPathInfo() );
+            return servletRequest.getAttribute(TemplateDispatcher.JST_SCRIPT ).toString();
+        } else {
+            return ((HttpServletRequest)servletRequest).getRequestURI();
         }
     }
 

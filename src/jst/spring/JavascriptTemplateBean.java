@@ -1,8 +1,9 @@
 package jst.spring;
 
 import jst.ScriptRuntime;
-import jst.TemplateContext;
 import jst.FileTemplateLoader;
+import jst.TemplateContext;
+import jst.TemplateContextImpl;
 
 import java.util.Map;
 import java.util.List;
@@ -11,8 +12,8 @@ import java.util.HashMap;
 import java.io.IOException;
 import java.io.File;
 
-public class JavascriptTemplateBean {
-    private TemplateContext context;
+public class JavascriptTemplateBean implements TemplateContext {
+    private TemplateContextImpl context;
 
     private Map<String,Object> variables;
     private Map<String,Object> mixins;
@@ -71,9 +72,13 @@ public class JavascriptTemplateBean {
         return runtime.invoke();
     }
 
+    public void include(String url) throws IOException {
+        context.include( url );
+    }
+
     private void initializeContext() throws IOException {
         if( context == null ) {
-            context = new TemplateContext();
+            context = new TemplateContextImpl();
             for( File resourcePath : resourcePaths ) {
                 context.addLoader( new FileTemplateLoader( resourcePath ) );
             }

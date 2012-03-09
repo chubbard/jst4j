@@ -1,8 +1,6 @@
 package jst.shell;
 
-import jst.TemplateContext;
-import jst.FileTemplateLoader;
-import jst.ScriptRuntime;
+import jst.*;
 
 import java.io.IOException;
 import java.io.File;
@@ -12,7 +10,6 @@ import java.awt.event.ActionEvent;
 import java.util.*;
 import java.util.List;
 
-import jst.TemplateLoader;
 import org.mozilla.javascript.EcmaError;
 import org.mozilla.javascript.EvaluatorException;
 import org.mozilla.javascript.Context;
@@ -33,12 +30,12 @@ public class Shell {
     int currentCommand = 0;
     int lastCommandIndex = 0;
 
-    TemplateContext templateContext;
+    TemplateContextImpl templateContext;
     ScriptRuntime runtime;
     String[] filePaths;
 
     public Shell(String[] filePaths) throws IOException {
-        templateContext = new TemplateContext();
+        templateContext = new TemplateContextImpl();
         templateContext.addLoader( new FileTemplateLoader( new File(".") ) );
 
         runtime = templateContext.start();

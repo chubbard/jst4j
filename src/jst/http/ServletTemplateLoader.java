@@ -42,4 +42,9 @@ public class ServletTemplateLoader implements TemplateLoader {
     public String getRootUrl() {
         return basePath;
     }
+
+    public boolean exists() {
+        File path = new File( context.getRealPath( basePath != null ? basePath : "/") );
+        return path.exists();
+    }
 }
