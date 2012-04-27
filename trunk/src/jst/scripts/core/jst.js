@@ -1,3 +1,5 @@
+importPackage( Packages.jst );
+
 /**
  * This function merges the properties on obj into this object.  It modifies this such that all
  * the properties on the given obj instance will be copied onto this.  If a property by the same
