@@ -70,6 +70,15 @@ var Html = {
 
         return this.tag( 'link', options );
     },
+    less: function( url, options ) {
+        options = options || {};
+        options.media = options.media || 'screen';
+        options.href = url;
+        options.rel = 'stylesheet/less';
+        options.type = 'text/css';
+
+        return this.tag( 'link', options );
+    },
     script : function( url, options ) {
         options = options || {};
         options.src = url;
