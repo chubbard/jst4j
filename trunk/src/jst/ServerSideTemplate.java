@@ -109,7 +109,7 @@ public class ServerSideTemplate {
     }
 
     private String escapeSeparator() {
-        return File.separator.equals("\\") ? "\\\\" : File.separator;
+        return "\\\\|/";
     }
 
     private String stripExtension(String scriptFile) {
