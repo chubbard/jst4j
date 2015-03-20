@@ -159,7 +159,7 @@ public class Emailer {
 
                 Transport transport = session.getTransport();
                 if( logger.isDebugEnabled() ) logger.debug("Connecting to mail server...");
-                if( (username == null || !username.isEmpty()) && (password == null || !password.isEmpty()) ) {
+                if( username != null && !username.isEmpty() && password != null && !password.isEmpty() ) {
                     transport.connect(username, password);
                 } else {
                     // no auth - open relay
