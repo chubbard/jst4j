@@ -159,7 +159,12 @@ public class Emailer {
 
                 Transport transport = session.getTransport();
                 if( logger.isDebugEnabled() ) logger.debug("Connecting to mail server...");
-                transport.connect(username, password);
+                if( (username == null || !username.isEmpty()) && (password == null || !password.isEmpty()) ) {
+                    transport.connect(username, password);
+                } else {
+                    // no auth - open relay
+                    transport.connect();
+                }
                 if( logger.isDebugEnabled() ) logger.debug("Connection made with mail server.");
                 transport.sendMessage(mimeMessage, mimeMessage.getAllRecipients());
                 if( logger.isDebugEnabled() ) logger.debug("Message " + subject + " sent to " + to );
