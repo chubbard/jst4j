@@ -144,6 +144,14 @@ var Form = {
         return Html.tag( "input", options );
     },
     select : function( name, keys, select, options ) {
+        function makeOptions(name, value, selected) {
+            if( select != null && selected ) {
+                return Html.tag("option", { value: value, selected: "selected" }, name );
+            } else {
+                return Html.tag("option", {value: value}, name );
+            }
+        }
+
         options = options || {};
         options.name = name;
 
@@ -153,22 +161,18 @@ var Form = {
         delete options.value;
 
         var opts = [];
-        for( var index = 0; index < keys.length; index++ ) {
-            var item = keys[index];
-            if( item instanceof Object || item instanceof java.lang.Object ) {
-                var label = getProperty( item, lblField );
-                var value = getProperty( item, valField );
-                if( select != null && (select == value || select == index) ) {
-                    opts.push( Html.tag("option", { value: value, selected: "selected" }, label ) );
+        if( keys.length ) {
+            for( var index = 0; index < keys.length; index++ ) {
+                var item = keys[index];
+                if( item instanceof Object || item instanceof java.lang.Object ) {
+                    opts.push( makeOptions(getProperty( item, lblField ), getProperty( item, valField ), (select == item[valField] || select == index) ));
                 } else {
-                    opts.push( Html.tag("option", { value: value }, label ) );
+                    opts.push( makeOptions(item, item, (select == item || select == index)) );
                 }
-            } else {
-                if( select != null && (select == value || select == index) ) {
-                    opts.push( Html.tag("option", { value: item, selected: "selected" }, item ) );
-                } else {
-                    opts.push( Html.tag("option", {value: item}, item ) );
-                }
+            }
+        } else {
+            for each( var property in keys.properties() ) {
+                opts.push( makeOptions( property, keys[property], (select == keys[property] || select == property)) );
             }
         }
 
